@@ -5,26 +5,18 @@
 #pragma once
 #include <QObject>
 #include <QQmlComponent>
-
 namespace Rules {
 class RuleNode : public QObject {
   Q_OBJECT
   QML_ELEMENT
+
+  enum Type { e_normal, e_unit, e_location };
+
   Q_PROPERTY(QString name READ name WRITE setname NOTIFY nameChanged FINAL)
   Q_PROPERTY(QString description READ description WRITE setdescription NOTIFY
                  descriptionChanged FINAL)
   Q_PROPERTY(RuleNode *Template READ Template WRITE setTemplate NOTIFY
                  TemplateChanged FINAL)
-  Q_PROPERTY(
-      QVector<RuleNode *> importantAttributes READ importantAttributes WRITE
-          setimportantAttributes NOTIFY importantAttributesChanged FINAL)
-  // declarations
-  QVector<RuleNode *> m_importantAttributes;
-  void setimportantAttributes(
-      QVector<RuleNode *> newimportantAttributes); // declaration
-  const QVector<RuleNode *> importantAttributes(); // declaration
-  // signal
-  void importantAttributesChanged();
 
 public:
   explicit RuleNode(QObject *parent = nullptr);
@@ -36,7 +28,7 @@ public:
   const QString name();
 
   void setTemplate(RuleNode *newTemplate);
-  const RuleNode *Template();
+  RuleNode *Template();
 signals:
   void nameChanged();
   void descriptionChanged();

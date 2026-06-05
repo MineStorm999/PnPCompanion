@@ -38,22 +38,8 @@ void RuleNode::setTemplate(RuleNode *newTemplate) // implementation
   emit TemplateChanged();
 }
 
-const RuleNode *RuleNode::Template() // implementation
+RuleNode *RuleNode::Template() // implementation
 {
   return m_Template;
-}
-
-void RuleNode::setimportantAttributes(
-    QVector<RuleNode *> newimportantAttributes) // implementation
-{
-  if (m_importantAttributes == newimportantAttributes)
-    return;
-  m_importantAttributes = newimportantAttributes;
-  emit importantAttributesChanged();
-}
-
-const QVector<RuleNode *> RuleNode::importantAttributes() // implementation
-{
-  return m_importantAttributes;
 }
 } // namespace Rules
