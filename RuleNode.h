@@ -7,7 +7,7 @@
 #include <QQmlComponent>
 
 namespace Rules {
-class RuleNode : public QObject {
+class RuleNode : public QObject { // TODO implement
   Q_OBJECT
   QML_ELEMENT
 public:
