@@ -4,7 +4,11 @@
 
 #include "RuleNode.h"
 namespace Rules {
-RuleNode::RuleNode(QObject *parent) : QObject{parent} {}
+RuleNode::RuleNode(QObject *parent, QString n_name, QString n_desc)
+    : QObject{parent} {
+  setname(n_name);
+  setdescription(n_desc);
+}
 
 void RuleNode::setname(QString newname) // implementation
 {

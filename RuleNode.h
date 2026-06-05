@@ -19,7 +19,8 @@ class RuleNode : public QObject {
                  TemplateChanged FINAL)
 
 public:
-  explicit RuleNode(QObject *parent = nullptr);
+  explicit RuleNode(QObject *parent = nullptr, QString n_name = "",
+                    QString n_desc = "");
 
   void setdescription(QString newdescription);
   const QString description();
