@@ -3,4 +3,6 @@
 //
 
 #include "RuleNode.h"
+namespace Rules {
 RuleNode::RuleNode(QObject *parent) : QObject{parent} {}
+} // namespace Rules

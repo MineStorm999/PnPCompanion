@@ -32,6 +32,7 @@ Window {
         }
     }
 
-    RuleNode{id: test}
-    
+    RuleNode{
+        id: test
+    }
 }
