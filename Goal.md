@@ -11,6 +11,7 @@
         - "Rule Language"
 
 # Detailed
+
 ## Important
 ### Character Sheet
 - preconfigured
@@ -74,7 +75,6 @@
 
 ### Dice Roller
 - Just dice rolling...
-
 ## Nice To have
 ### AI DM Assistant
 - AI STT -> Plays FX and ambients
