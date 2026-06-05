@@ -41,7 +41,7 @@
         - Range (m)
         - Weight (kg)
         - Damage (dmg)
-    - Configurable (can fork from examples (eg. different dmg forms, etc.))
+    - Configurable (can fork from Predefined (eg. different dmg forms, etc.))
         - Name
         - Shortform
         - Description
