@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.VirtualKeyboard
-
+import PnPCompanion
 Window {
     id: window
     width: 640
@@ -31,4 +31,7 @@ Window {
             }
         }
     }
+
+    RuleNode{id: test}
+    
 }

@@ -4,11 +4,11 @@
 
 #pragma once
 #include <QObject>
+#include <QQmlComponent>
 
-namespace Rules {
-class RuleNode : QObject {
+class RuleNode : public QObject {
   Q_OBJECT
+  QML_ELEMENT
 public:
   explicit RuleNode(QObject *parent = nullptr);
 };
-} // namespace Rules
