@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.VirtualKeyboard
 import PnPCompanion
+import QtQuick.Controls
 
 Window {
     id: window
@@ -33,7 +34,14 @@ Window {
         }
     }
 
-    Rectangle {
+    Rules {
         id: rules
+    }
+    Button {
+        id: addNode
+        text: "AddNode"
+        onClicked: {
+            rules.addNode("NewNode", "This a new node");           // Create a new RuleNode and add it to the model;
+        }
     }
 }

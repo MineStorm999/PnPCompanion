@@ -4,23 +4,33 @@ import PnPCompanion
 
 ListView {
     id: listView
+    RuleNodeListModel {
+        id: listModel
+    }
     anchors.fill: parent
-    required model
+    model: listModel
 
     ScrollBar.vertical: ScrollBar {}
+
     delegate: Rectangle {
         width: listView.width
-        height: 100
+        height: 50
         color: "blue"
+
         required property string name
         required property string description
         Column {
+            anchors.fill: parent
             Text {
-                text: parent.name
+                text: parent.parent.name
             }
             Text {
-                text: parent.description
+                text: parent.parent.description
             }
         }
+    }
+
+    function addNode(name, description) {
+        listModel.addNode(name, description);
     }
 }
