@@ -40,8 +40,9 @@ Window {
     Button {
         id: addNode
         text: "AddNode"
+        property int i: 0
         onClicked: {
-            rules.addNode("NewNode", "This a new node");           // Create a new RuleNode and add it to the model;
+            rules.addNode("NewNode" + (i++).toString(), "This a new node");           // Create a new RuleNode and add it to the model;
         }
     }
 }

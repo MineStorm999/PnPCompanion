@@ -22,10 +22,10 @@ ListView {
         Column {
             anchors.fill: parent
             Text {
-                text: parent.parent.name
+                text: name
             }
             Text {
-                text: parent.parent.description
+                text: description
             }
         }
     }

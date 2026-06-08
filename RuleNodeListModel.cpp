@@ -13,7 +13,7 @@ void RuleNodeListModel::addNode(RuleNode *node, int i) {
   if (i == -1) {
     i = rowCount();
   }
-  beginInsertRows(QModelIndex(), i, i + 1);
+  beginInsertRows(QModelIndex(), i, i);
   m_ruleNodes.append(node);
   endInsertRows();
 }
