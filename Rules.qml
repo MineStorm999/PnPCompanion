@@ -19,6 +19,7 @@ ListView {
 
         required property string name
         required property string description
+        //name: "Test"
         Column {
             anchors.fill: parent
             Text {
