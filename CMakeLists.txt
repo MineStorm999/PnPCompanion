@@ -17,6 +17,7 @@ qt_add_qml_module(appPnPCompanion
     QML_FILES
         Main.qml
         Rules.qml
+        RuleNodeDel.qml
         SOURCES RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp
 )
 

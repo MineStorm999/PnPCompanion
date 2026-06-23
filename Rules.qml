@@ -12,26 +12,10 @@ ListView {
 
     ScrollBar.vertical: ScrollBar {}
 
-    delegate: Rectangle {
-        width: listView.width
-        height: 50
-        color: "blue"
+    delegate: RuleNodeDel {}
 
-        required property string name
-        required property string description
-        //name: "Test"
-        Column {
-            anchors.fill: parent
-            Text {
-                text: name
-            }
-            Text {
-                text: description
-            }
-        }
-    }
-
-    function addNode(name, description) {
+    function addNode(name, description)
+    {
         listModel.addNode(name, description);
     }
 }

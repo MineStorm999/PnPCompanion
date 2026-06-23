@@ -20,7 +20,7 @@ Window {
             name: "visible"
             when: inputPanel.active
             PropertyChanges {
-                inputPanel.y: window.height - inputPanel.height
+                inputPanel.y: window.height //- inputPanel.height
             }
         }
         transitions: Transition {
@@ -41,8 +41,8 @@ Window {
         id: addNode
         text: "AddNode"
         property int i: 0
-        onClicked: {
-            rules.addNode("NewNode" + (i++).toString(), "This a new node");           // Create a new RuleNode and add it to the model;
+            onClicked: {
+                rules.addNode("NewNode" + (i++).toString(), "This a new node");           // Create a new RuleNode and add it to the model;
+            }
         }
     }
-}
