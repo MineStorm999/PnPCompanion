@@ -34,8 +34,12 @@ Window {
         }
     }
 
-    Rules {
-        id: rules
+    Rectangle {
+        anchors.fill: parent
+        color:"#292b33"
+        Rules {
+            id: rules
+        }
     }
     Button {
         id: addNode

@@ -5,16 +5,25 @@ import QtQuick.Layouts
 // TODO STYLE
 Item {
     width: listView.width
-    height: 80
     required property string name
     required property string description
     id: base
+    height: 80
 
     function setNewHeight()
     {
-        var titleHeight = Math.max((base.state === "WRITE" ? titleWRITE.height : titleREAD.height), editButton.height);
-        base.height = (base.state === "WRITE" ? descWRITE.height : descREAD.height) + titleHeight + column.padding;
+        var titleHeight = Math.max((base.state === "WRITE" ? titleWRITE.height : titleREAD.height), editButton.height) + titleUnderLine.height;
+        var descHeight = (base.state === "WRITE" ? descWRITE.height : descREAD.height)
+
+        descBackground.height = descHeight
+        base.height = descHeight + titleHeight + column.padding + 5/*bottom margin*/;
     }
+
+    Component.onCompleted: {
+        setNewHeight()
+    }
+
+
     states: [
         State {
             name: "READ"
@@ -41,23 +50,31 @@ Item {
     ]
     Rectangle {
         anchors.fill: parent
-        color: "blue"
+        color: "black"
 
         //name: "Test"
         Column {
             anchors.fill: parent
             id: column
+
             RowLayout {
                 width: parent.width
+
                 Text {
                     id: titleREAD
                     text: name
+                    color:"white"
+                    Layout.fillWidth : true
+                    Layout.alignment: Qt.AlignBottom
+                    Layout.leftMargin: 5
                 }
                 TextInput {
                     visible: false
+                    Layout.fillWidth : true
+                    color:"white"
+                    Layout.alignment: Qt.AlignBottom
                     id: titleWRITE
                     text: name
-                    color: "gray"
                     onTextChanged: {
                         name = text;
                     }
@@ -65,6 +82,8 @@ Item {
                 Button {
                     text:"Edit"
                     id: editButton
+                    Layout.preferredWidth : 64 // TODO icon for edit button
+                    Layout.preferredHeight : 32
                     Layout.alignment: Qt.AlignRight
                     onClicked: {
                         if (base.state === "WRITE")
@@ -80,22 +99,45 @@ Item {
                     }
                 }
             }
-            Text {
-                id: descREAD
-                text: description
+
+            Rectangle {
+                id: titleUnderLine
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: 2
+                width: parent.width - 10
+
+                color: "yellow"
             }
-            TextArea {
-                visible: false
-                id: descWRITE
-                text: description
+            Rectangle {
+                id: descBackground
+                anchors.topMargin: 5
+                width: parent.width - 10
+                height: 50
+                anchors.horizontalCenter: parent.horizontalCenter
                 color: "gray"
-                Component.onCompleted: {
-                    setNewHeight();
+                Text {
+                    id: descREAD
+                    text: description
+                    Component.onCompleted: {
+                        setNewHeight();
+                        descBackground.height = height
+                    }
                 }
 
-                onTextChanged: {
-                    description = text;
-                    setNewHeight();
+                TextArea {
+                    visible: false
+                    id: descWRITE
+                    text: description
+                    color: "black"
+                    Component.onCompleted: {
+                        setNewHeight();
+                        descBackground.height = height
+                    }
+
+                    onTextChanged: {
+                        description = text;
+                        setNewHeight();
+                    }
                 }
             }
         }

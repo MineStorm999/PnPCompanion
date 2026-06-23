@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 import PnPCompanion
 
 ListView {
@@ -9,6 +9,7 @@ ListView {
     }
     anchors.fill: parent
     model: listModel
+    spacing: 5
 
     ScrollBar.vertical: ScrollBar {}
 
