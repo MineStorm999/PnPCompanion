@@ -17,7 +17,15 @@ public:
   explicit RuleNodeListModel(QObject *parent = nullptr);
 
   void addNode(RuleNode *node, int i = -1);
+
+  // overridden methods
   Q_INVOKABLE void addNode(QString n_name, QString n_desc, int i = -1);
+
+  Qt::ItemFlags flags(const QModelIndex &index) const override {
+    emit return Qt::ItemIsEnabled | Qt::ItemIsEditable;
+  };
+  bool setData(const QModelIndex &index, const QVariant &value,
+               int role) override;
 
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 

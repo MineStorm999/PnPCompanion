@@ -39,4 +39,20 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
   }
   return QVariant();
 }
+bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
+                                int role) {
+  RuleNode *node = m_ruleNodes[index.row()];
+  switch ((RuleNodeRoles)role) {
+  case NameRole:
+    if (!value.canConvert<QString>())
+      return false;
+    node->setname(value.toString());
+  case DescriptionRole:
+    if (!value.canConvert<QString>())
+      return false;
+    node->setdescription(value.toString());
+  }
+  emit dataChanged(index, index, {});
+  return true;
+};
 } // namespace Rules

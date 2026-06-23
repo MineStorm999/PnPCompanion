@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import PnPCompanion
 import QtQuick.Layouts
-
+// TODO STYLE
 Item {
     width: listView.width
     height: 80
@@ -21,6 +21,8 @@ Item {
             PropertyChanges {
                 titleREAD.visible: true
                 descREAD.visible: true
+                //titleREAD.text: name
+                //descREAD.text: description
 
                 titleWRITE.visible: false
                 descWRITE.visible: false
@@ -56,6 +58,9 @@ Item {
                     id: titleWRITE
                     text: name
                     color: "gray"
+                    onTextChanged: {
+                        name = text;
+                    }
                 }
                 Button {
                     text:"Edit"
@@ -89,6 +94,7 @@ Item {
                 }
 
                 onTextChanged: {
+                    description = text;
                     setNewHeight();
                 }
             }
