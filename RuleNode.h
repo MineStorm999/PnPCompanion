@@ -10,7 +10,7 @@ class RuleNode : public QObject {
   Q_OBJECT
   QML_ELEMENT
 
-  enum Type { e_normal, e_unit, e_location };
+  enum Type { eNormal, eUnit, eLocation, eClass, eSpezies };
 
   Q_PROPERTY(QString name READ name WRITE setname NOTIFY nameChanged FINAL)
   Q_PROPERTY(QString description READ description WRITE setdescription NOTIFY
@@ -19,7 +19,7 @@ class RuleNode : public QObject {
                  TemplateChanged FINAL)
 
 public:
-  explicit RuleNode(QObject *parent = nullptr, QString n_name = "",
+  explicit RuleNode(RuleNode *parent = nullptr, QString n_name = "",
                     QString n_desc = "");
 
   void setdescription(QString newdescription);
@@ -30,6 +30,14 @@ public:
 
   void setTemplate(RuleNode *newTemplate);
   RuleNode *Template();
+
+  // internally called
+  void _setname(QString newname);
+  // internally called
+  void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
+
+  Type type() const { return m_type; };
+  void setType(Type newType) { m_type = newType; };
 signals:
   void nameChanged();
   void descriptionChanged();
@@ -39,5 +47,9 @@ private:
   QString m_name;
   QString m_description;
   RuleNode *m_Template;
+  Type m_type;
+
+  std::shared_ptr<RuleNode> m_this;
 };
+
 } // namespace Rules

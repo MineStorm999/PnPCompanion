@@ -3,8 +3,9 @@
 //
 
 #include "RuleNode.h"
+#include "RuleNodeManager.h"
 namespace Rules {
-RuleNode::RuleNode(QObject *parent, QString n_name, QString n_desc)
+RuleNode::RuleNode(RuleNode *parent, QString n_name, QString n_desc)
     : QObject{parent} {
   setname(n_name);
   setdescription(n_desc);
@@ -14,10 +15,15 @@ void RuleNode::setname(QString newname) // implementation
 {
   if (m_name == newname)
     return;
+  RuleNodeManager::ChangeName(m_this, newname);
+}
+void RuleNode::_setname(QString newname) // implementation
+{
+  if (m_name == newname)
+    return;
   m_name = newname;
   emit nameChanged();
 }
-
 const QString RuleNode::name() // implementation
 {
   return m_name;

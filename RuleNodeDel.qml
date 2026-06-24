@@ -148,6 +148,10 @@ Item {
                             description = text;
                             setNewHeight();
                         }
+                        background: Rectangle {
+                            color: "transparent"
+                            border.color: "transparent"
+                        }
                     }
                 }
             }
