@@ -5,6 +5,7 @@
 #pragma once
 #include <QObject>
 #include <QQmlComponent>
+#include <qtmetamacros.h>
 namespace Rules {
 class RuleNode : public QObject {
   Q_OBJECT
@@ -17,6 +18,8 @@ class RuleNode : public QObject {
                  descriptionChanged FINAL)
   Q_PROPERTY(RuleNode *Template READ Template WRITE setTemplate NOTIFY
                  TemplateChanged FINAL)
+  Q_PROPERTY(QString formattedText READ formattedText WRITE setformattedText
+                 NOTIFY formattedTextChanged FINAL)
 
 public:
   explicit RuleNode(RuleNode *parent = nullptr, QString n_name = "",
@@ -31,25 +34,32 @@ public:
   void setTemplate(RuleNode *newTemplate);
   RuleNode *Template();
 
-  // internally called
-  void _setname(QString newname);
-  // internally called
-  void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
-
   Type type() const { return m_type; };
   void setType(Type newType) { m_type = newType; };
+
+  void setformattedText(QString newformattedText); // declaration
+  const QString formattedText();
 signals:
   void nameChanged();
   void descriptionChanged();
   void TemplateChanged();
+  // formattedText
+  void formattedTextChanged();
 
 private:
   QString m_name;
   QString m_description;
   RuleNode *m_Template;
   Type m_type;
+  QString m_formattedText;
 
   std::shared_ptr<RuleNode> m_this;
+
+public:
+  // internally called
+  void _setname(QString newname);
+  // internally called
+  void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
 };
 
 } // namespace Rules

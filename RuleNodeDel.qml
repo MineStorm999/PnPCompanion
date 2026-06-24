@@ -137,6 +137,7 @@ Item {
                         visible: false
                         id: descWRITE
                         text: description
+                        text: '<html><style type="text/css"></style><a href="http://google.com">google</a></html>'
                         color: "black"
                         Component.onCompleted: {
                             setNewHeight();

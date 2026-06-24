@@ -13,12 +13,15 @@ class RuleNodeManager {
 public:
   static void ChangeName(Rule rule, QString newName);
   static Rule GetRule(QString ruleName);
-  static Rule CreateRule(QString name, QString desc, QString parentName,
-                         bool useParentTemplate);
+  // static Rule GetRule(QString ruleName);
 
   static Rule CreateRule(QString name, QString desc, Rule parent,
                          bool useParentTemplate);
 
   static bool NameTaken(QString name);
+
+  static QJsonObject Save(); // TODO saving of rules
+
+  static void Init(QJsonObject *save = nullptr /*TODO saving of rules*/);
 };
 } // namespace Rules

@@ -15,7 +15,8 @@ void RuleNode::setname(QString newname) // implementation
 {
   if (m_name == newname)
     return;
-  RuleNodeManager::ChangeName(m_this, newname);
+  _setname(newname);
+  // RuleNodeManager::ChangeName(m_this, newname);
 }
 void RuleNode::_setname(QString newname) // implementation
 {
@@ -51,5 +52,19 @@ void RuleNode::setTemplate(RuleNode *newTemplate) // implementation
 RuleNode *RuleNode::Template() // implementation
 {
   return m_Template;
+}
+
+// implementation of formattedText
+void RuleNode::setformattedText(QString newformattedText) // implementation
+{
+  if (m_formattedText == newformattedText)
+    return;
+  m_formattedText = newformattedText;
+  emit formattedTextChanged();
+}
+
+const QString RuleNode::formattedText() // implementation
+{
+  return m_formattedText;
 }
 } // namespace Rules

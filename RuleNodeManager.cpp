@@ -11,6 +11,7 @@ namespace Rules {
 QVector<Rule> ruleNodes;
 QMap<QString, Rule> rules;
 
+Rule root;
 void RuleNodeManager::ChangeName(std::shared_ptr<Rules::RuleNode> rule,
                                  QString newName) {
   if (rules.contains(newName)) {
@@ -30,22 +31,13 @@ Rule RuleNodeManager::GetRule(QString ruleName) {
 
 bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
 
-Rule RuleNodeManager::CreateRule(QString name, QString desc,
-                                 QString parentString, bool useParentTemplate) {
-  if (NameTaken(name)) {
-    return nullptr;
-  }
-  Rule parent = nullptr;
-  if (rules.contains(parentString)) {
-    parent = rules[parentString];
-  }
-  return CreateRule(name, desc, parent, useParentTemplate);
-}
-
 Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
                                  bool useParentTemplate) {
   if (NameTaken(name)) {
     return nullptr;
+  }
+  if (!parent) {
+    parent = root; // has to have a parent
   }
   Rule rule = std::make_shared<RuleNode>(parent.get(), name, desc);
   if (!rule) {
@@ -53,6 +45,10 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
   }
   rules[name] = rule;
   return rules[name];
+}
+
+void RuleNodeManager::Init(QJsonObject *save) {
+  root = CreateRule("Root", "The root node of the rule tree.", nullptr, false);
 }
 
 } // namespace Rules
