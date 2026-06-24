@@ -125,6 +125,7 @@ Item {
                     color: "gray"
                     Text {
                         id: descREAD
+                        textFormat: Text.MarkdownText
                         text: description
                         Component.onCompleted: {
                             setNewHeight();
@@ -136,8 +137,8 @@ Item {
                     TextArea {
                         visible: false
                         id: descWRITE
+                        textFormat: Text.plainText
                         text: description
-                        text: '<html><style type="text/css"></style><a href="http://google.com">google</a></html>'
                         color: "black"
                         Component.onCompleted: {
                             setNewHeight();
