@@ -37,7 +37,6 @@ public:
   Type type() const { return m_type; };
   void setType(Type newType) { m_type = newType; };
 
-  void setformattedText(QString newformattedText); // declaration
   const QString formattedText();
 signals:
   void nameChanged();
@@ -57,9 +56,13 @@ private:
 
 public:
   // internally called
+  // internally called
+  // internally called
   void _setname(QString newname);
   // internally called
   void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
+  // internally called
+  void setformattedText(QString unformattedText); // declaration
 };
 
 } // namespace Rules

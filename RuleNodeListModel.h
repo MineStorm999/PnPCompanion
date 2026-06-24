@@ -13,7 +13,11 @@ class RuleNodeListModel : public QAbstractListModel {
   Q_OBJECT
   QML_ELEMENT
 public:
-  enum RuleNodeRoles { NameRole = Qt::UserRole + 1, DescriptionRole };
+  enum RuleNodeRoles {
+    NameRole = Qt::UserRole + 1,
+    DescriptionRole,
+    FormattedDescriptionRole
+  };
   explicit RuleNodeListModel(QObject *parent = nullptr);
 
   void addNode(RuleNode *node, int i = -1);
@@ -37,6 +41,7 @@ protected:
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[DescriptionRole] = "description";
+    roles[FormattedDescriptionRole] = "formattedText";
     return roles;
   }
 

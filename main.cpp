@@ -1,5 +1,6 @@
 #include "RuleNode.h"
 #include "RuleNodeListModel.h"
+#include "RuleNodeManager.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
@@ -25,6 +26,7 @@ void DumpChildren(QObject *obj, int depth) {
 int main(int argc, char *argv[]) {
   qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
+  Rules::RuleNodeManager::Init();
   QGuiApplication app(argc, argv);
 
   QQmlApplicationEngine engine;

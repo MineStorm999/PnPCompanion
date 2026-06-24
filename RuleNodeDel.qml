@@ -7,6 +7,7 @@ Item {
     width: listView.width
     required property string name
     required property string description
+    required property string formattedText
     id: base
     height: 80
 
@@ -126,7 +127,7 @@ Item {
                     Text {
                         id: descREAD
                         textFormat: Text.MarkdownText
-                        text: description
+                        text: formattedText
                         Component.onCompleted: {
                             setNewHeight();
                             descBackground.height = height
@@ -137,7 +138,7 @@ Item {
                     TextArea {
                         visible: false
                         id: descWRITE
-                        textFormat: Text.plainText
+                        textFormat: Text.PlainText
                         text: description
                         color: "black"
                         Component.onCompleted: {

@@ -4,6 +4,7 @@
 
 #include "RuleNodeListModel.h"
 #include "RuleNode.h"
+#include <qlogging.h>
 
 namespace Rules {
 RuleNodeListModel::RuleNodeListModel(QObject *parent)
@@ -36,6 +37,8 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
     return node->name();
   case DescriptionRole:
     return node->description();
+  case FormattedDescriptionRole:
+    return node->formattedText();
   }
   return QVariant();
 }
@@ -51,6 +54,9 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
     if (!value.canConvert<QString>())
       return false;
     node->setdescription(value.toString());
+  case FormattedDescriptionRole:
+    qDebug() << "You must not set formatted text directly. Use the description "
+                "property instead.";
   }
   emit dataChanged(index, index, {});
   return true;
