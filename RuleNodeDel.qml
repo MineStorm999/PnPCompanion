@@ -10,138 +10,148 @@ Item {
     id: base
     height: 80
 
-    function setNewHeight()
-    {
-        var titleHeight = Math.max((base.state === "WRITE" ? titleWRITE.height : titleREAD.height), editButton.height) + titleUnderLine.height;
-        var descHeight = (base.state === "WRITE" ? descWRITE.height : descREAD.height)
 
-        descBackground.height = descHeight
-        base.height = descHeight + titleHeight + column.padding + 5/*bottom margin*/;
-    }
+    property var fontSize: 20
 
-    Component.onCompleted: {
-        setNewHeight()
-    }
+        function setNewHeight()
+        {
+            var titleHeight = Math.max((base.state === "WRITE" ? titleWRITE.height : titleREAD.height), editButton.height) + titleUnderLine.height;
+            var descHeight = (base.state === "WRITE" ? descWRITE.height : descREAD.height)
 
-
-    states: [
-        State {
-            name: "READ"
-            PropertyChanges {
-                titleREAD.visible: true
-                descREAD.visible: true
-                //titleREAD.text: name
-                //descREAD.text: description
-
-                titleWRITE.visible: false
-                descWRITE.visible: false
-            }
-        },
-        State {
-            name: "WRITE"
-            PropertyChanges {
-                titleREAD.visible: false
-                descREAD.visible: false
-
-                titleWRITE.visible: true
-                descWRITE.visible: true
-            }
+            descBackground.height = descHeight
+            base.height = descHeight + titleHeight + column.padding + 5/*bottom margin*/;
         }
-    ]
-    Rectangle {
-        anchors.fill: parent
-        color: "black"
 
-        //name: "Test"
-        Column {
+        Component.onCompleted: {
+            setNewHeight()
+        }
+
+
+        states: [
+            State {
+                name: "READ"
+                PropertyChanges {
+                    titleREAD.visible: true
+                    descREAD.visible: true
+                    //titleREAD.text: name
+                    //descREAD.text: description
+
+                    titleWRITE.visible: false
+                    descWRITE.visible: false
+                }
+            },
+            State {
+                name: "WRITE"
+                PropertyChanges {
+                    titleREAD.visible: false
+                    descREAD.visible: false
+
+                    titleWRITE.visible: true
+                    descWRITE.visible: true
+                }
+            }
+        ]
+        Rectangle {
             anchors.fill: parent
-            id: column
+            color: "black"
 
-            RowLayout {
-                width: parent.width
+            //name: "Test"
+            Column {
+                anchors.fill: parent
+                id: column
 
-                Text {
-                    id: titleREAD
-                    text: name
-                    color:"white"
-                    Layout.fillWidth : true
-                    Layout.alignment: Qt.AlignBottom
-                    Layout.leftMargin: 5
-                }
-                TextInput {
-                    visible: false
-                    Layout.fillWidth : true
-                    color:"white"
-                    Layout.alignment: Qt.AlignBottom
-                    id: titleWRITE
-                    text: name
-                    onTextChanged: {
-                        name = text;
+                RowLayout {
+                    width: parent.width
+
+                    Text {
+                        id: titleREAD
+                        text: name
+                        color:"white"
+                        Layout.fillWidth : true
+                        Layout.alignment: Qt.AlignBottom
+                        Layout.leftMargin: 5
+                        font.pointSize: base.fontSize
+                        font.bold: true
                     }
-                }
-                Button {
-                    text:"Edit"
-                    id: editButton
-                    Layout.preferredWidth : 64 // TODO icon for edit button
-                    Layout.preferredHeight : 32
-                    Layout.alignment: Qt.AlignRight
-                    onClicked: {
-                        if (base.state === "WRITE")
-                        {
-                            base.state = "READ";
-                            base.setNewHeight();
+                    TextInput {
+                        visible: false
+                        Layout.fillWidth : true
+                        color:"white"
+                        Layout.alignment: Qt.AlignBottom
+                        Layout.leftMargin: 5
+                        id: titleWRITE
+                        text: name
+                        onTextChanged: {
+                            name = text;
                         }
-                        else {
-                            base.state = "WRITE";
-                            base.setNewHeight()
+                        font.pointSize: base.fontSize
+                        font.bold: true
+                    }
+                    Button {
+                        text:"Edit"
+                        id: editButton
+                        Layout.preferredWidth : 64 // TODO icon for edit button
+                        Layout.preferredHeight : 32
+                        Layout.alignment: Qt.AlignRight
+                        onClicked: {
+                            if (base.state === "WRITE")
+                            {
+                                base.state = "READ";
+                                base.setNewHeight();
+                            }
+                            else {
+                                base.state = "WRITE";
+                                base.setNewHeight()
+                            }
+                            console.log("i am " + name + ", my state is: " + base.state);
                         }
-                        console.log("i am " + name + ", my state is: " + base.state);
+                    }
+                }
+
+                Rectangle {
+                    id: titleUnderLine
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 2
+                    width: parent.width - 10
+
+                    color: "yellow"
+                }
+                Rectangle {
+                    id: descBackground
+                    anchors.topMargin: 5
+                    width: parent.width - 10
+                    height: 50
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "gray"
+                    Text {
+                        id: descREAD
+                        text: description
+                        Component.onCompleted: {
+                            setNewHeight();
+                            descBackground.height = height
+                        }
+                        font.pointSize: base.fontSize
+                    }
+
+                    TextArea {
+                        visible: false
+                        id: descWRITE
+                        text: description
+                        color: "black"
+                        Component.onCompleted: {
+                            setNewHeight();
+                            descBackground.height = height
+                        }
+                        font.pointSize: base.fontSize
+
+                        onTextChanged: {
+                            description = text;
+                            setNewHeight();
+                        }
                     }
                 }
             }
 
-            Rectangle {
-                id: titleUnderLine
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 2
-                width: parent.width - 10
 
-                color: "yellow"
-            }
-            Rectangle {
-                id: descBackground
-                anchors.topMargin: 5
-                width: parent.width - 10
-                height: 50
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "gray"
-                Text {
-                    id: descREAD
-                    text: description
-                    Component.onCompleted: {
-                        setNewHeight();
-                        descBackground.height = height
-                    }
-                }
-
-                TextArea {
-                    visible: false
-                    id: descWRITE
-                    text: description
-                    color: "black"
-                    Component.onCompleted: {
-                        setNewHeight();
-                        descBackground.height = height
-                    }
-
-                    onTextChanged: {
-                        description = text;
-                        setNewHeight();
-                    }
-                }
-            }
         }
-
-
     }
-}
