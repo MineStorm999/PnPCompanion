@@ -34,9 +34,10 @@ Window {
         }
     }
 
-    Rectangle {
+    Image {
         anchors.fill: parent
-        color:"#292b33"
+        fillMode: Image.PreserveAspectCrop
+        source: "file:///home/spacedviking/Bilder/Wallpaper/wallpaperflare.com_wallpaper.jpg"
         Rules {
             id: rules
         }

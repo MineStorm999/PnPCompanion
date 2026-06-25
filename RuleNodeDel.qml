@@ -6,11 +6,13 @@ import QtQuick.Layouts
 // TODO STYLE
 Item {
     id: base
-    width: parent.width
+    width: parent.width * (1 - ((index % 10) * 0.01))
+    anchors.right: parent.right
     required property string name
     required property string description
     required property string formattedText
     required property int index
+
     height: 40
 
     property var fontSize: 20
@@ -96,7 +98,7 @@ Item {
         Rectangle {
             height: parent.height
             width: parent.width
-            color: "black"
+            color: "transparent"
             id: bG
 
             //name: "Test"
@@ -116,7 +118,7 @@ Item {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignBottom
                         Layout.leftMargin: 5
-                        font.pointSize: base.fontSize
+                        font.pointSize: base.fontSize;
                         font.bold: true
                     }
                     TextInput {
@@ -167,13 +169,14 @@ Item {
                 anchors.topMargin: 5
                 width: parent.width - 10
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: "gray"
+                color: "#6d05082e"
                 Text {
                     id: descREAD
                     textFormat: Text.MarkdownText
                     text: base.formattedText
                     width: parent.width
                     wrapMode: Text.WordWrap
+                    color: "white"
 
                     onWidthChanged: {
                         base.setNewHeight();
@@ -223,7 +226,7 @@ Item {
             visible: false
             textFormat: Text.PlainText
             text: base.description
-            color: "black"
+            color: "white"
             Component.onCompleted: {
                 base.setNewHeight();
             }
