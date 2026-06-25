@@ -1,24 +1,69 @@
 //
-// Created by Spaced Viking on 01.06.2026
+// Created by Spaced Viking on 05.06.2026
 //
 
 #pragma once
-#include <QQuickItem>
-#include <qqmlintegration.h>
-
-class RuleNode : QQuickItem {
-public:
+#include <QObject>
+#include <QQmlComponent>
+#include <qtmetamacros.h>
+namespace Rules {
+class RuleNode : public QObject {
   Q_OBJECT
   QML_ELEMENT
-  Q_PROPERTY(QString text READ text WRITE settext NOTIFY textChanged FINAL)
 
-  explicit RuleNode(QQuickItem *parent = nullptr);
+  enum Type { eNormal, eUnit, eLocation, eClass, eSpezies };
 
-  void settext(QString newtext);
-  QString text() const;
+  Q_PROPERTY(QString name READ name WRITE setname NOTIFY nameChanged FINAL)
+  Q_PROPERTY(QString description READ description WRITE setdescription NOTIFY
+                 descriptionChanged FINAL)
+  Q_PROPERTY(RuleNode *Template READ Template WRITE setTemplate NOTIFY
+                 TemplateChanged FINAL)
+  Q_PROPERTY(QString formattedText READ formattedText WRITE setformattedText
+                 NOTIFY formattedTextChanged FINAL)
+
+public:
+  explicit RuleNode(RuleNode *parent = nullptr, QString n_name = "",
+                    QString n_desc = "");
+
+  void setdescription(QString newdescription);
+  const QString description();
+
+  void setname(QString newname);
+  const QString name();
+
+  void setTemplate(RuleNode *newTemplate);
+  RuleNode *Template();
+
+  Type type() const { return m_type; };
+  void setType(Type newType) { m_type = newType; };
+
+  const QString formattedText();
+  void setformattedText(QString unformattedText); // declaration
 signals:
-  void textChanged();
+  void nameChanged();
+  void descriptionChanged();
+  void TemplateChanged();
+  // formattedText
+  void formattedTextChanged();
 
 private:
-  QString m_text;
+  QString m_name;
+  QString m_description;
+  RuleNode *m_Template;
+  Type m_type;
+  QString m_formattedText;
+
+  std::shared_ptr<RuleNode> m_this;
+
+public:
+  // internally called
+  // internally called
+  // internally called
+  void _setname(QString newname);
+  // internally called
+  void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
+  // internally called
+  Q_INVOKABLE void _setformattedText(); // declaration
 };
+
+} // namespace Rules
