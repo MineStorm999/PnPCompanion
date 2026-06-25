@@ -47,6 +47,7 @@ Item {
             descBackground.height = (base.state === "WRITE" ? descWRITE.height : descREAD.height);
 
             base.height = descBackground.height + titleHeight + column.padding + 5;/*bottom margin*/
+            bG.height = base.height;
         }
 
         Component.onCompleted: {
@@ -88,25 +89,13 @@ Item {
 
                     editButton.visible: false
                 }
-            },
-            State {
-                name: "HINT"
-                PropertyChanges {
-                    base.width: 300
-                    base.fontSize: 14
-                    titleREAD.visible: true
-                    descREAD.visible: true
-
-                    titleWRITE.visible: false
-                    descWRITE.visible: false
-
-                    editButton.visible: false
-                }
             }
         ]
         Rectangle {
-            anchors.fill: parent
+            height: parent.height
+            width: parent.width
             color: "black"
+            id: bG
 
             //name: "Test"
             Column {
@@ -119,6 +108,8 @@ Item {
                     Text {
                         id: titleREAD
                         text: base.name
+
+                        wrapMode: Text.WordWrap
                         color: "white"
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignBottom
@@ -190,7 +181,7 @@ Item {
                     }
                     font.pointSize: base.fontSize
 
-                    ToolTip {
+                    RuleNodeHint {
                         id: tT
                         x: 100;
                         y: 200;
@@ -208,9 +199,9 @@ Item {
                     onLinkHovered: (link)=>{
                     if (link === "")
                     {
-                        tT.hide()
+                        tT.visible = false;
                     }else {
-                    tT.show();
+                    tT.showHint(link);
                 }
             }
             MouseArea {
