@@ -10,8 +10,7 @@ Item {
     required property string name
     required property string description
     required property string formattedText
-    height: 80
-    state: "READ"
+    height: 40
 
     property var fontSize: 20
 
@@ -44,16 +43,14 @@ Item {
 
         function setNewHeight()
         {
-            var titleHeight = Math.max((base.state === "WRITE" ? titleWRITE.height : titleREAD.height), editButton.height) + titleUnderLine.height;
-            var descHeight = (base.state === "WRITE" ? descWRITE.height : descREAD.height);
+            var titleHeight = Math.max((base.state === "WRITE" ? titleWRITE.contentHeight : titleREAD.contentHeight), editButton.height * (editButton.visible ? 1 : 0)) + titleUnderLine.height;
+            descBackground.height = (base.state === "WRITE" ? descWRITE.height : descREAD.height);
 
-            descBackground.height = descHeight;
-            base.height = descHeight + titleHeight + column.padding + 5;/*bottom margin*/
+            base.height = descBackground.height + titleHeight + column.padding + 5;/*bottom margin*/
         }
 
         Component.onCompleted: {
-            model.setData(model.index(base.index, 0), "Test", 258); // desc
-            //console.log(model.data(model.index(base.index, 0), 258));
+            updateData();
             setNewHeight();
         }
 
@@ -83,6 +80,20 @@ Item {
             State {
                 name: "PLAYER"
                 PropertyChanges {
+                    titleREAD.visible: true
+                    descREAD.visible: true
+
+                    titleWRITE.visible: false
+                    descWRITE.visible: false
+
+                    editButton.visible: false
+                }
+            },
+            State {
+                name: "HINT"
+                PropertyChanges {
+                    base.width: 300
+                    base.fontSize: 14
                     titleREAD.visible: true
                     descREAD.visible: true
 
@@ -162,7 +173,6 @@ Item {
                 id: descBackground
                 anchors.topMargin: 5
                 width: parent.width - 10
-                height: 50
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "gray"
                 Text {
@@ -177,7 +187,6 @@ Item {
                     }
                     Component.onCompleted: {
                         base.setNewHeight();
-                        descBackground.height = height;
                     }
                     font.pointSize: base.fontSize
                     onLinkHovered: {
@@ -193,12 +202,10 @@ Item {
                     color: "black"
                     Component.onCompleted: {
                         base.setNewHeight();
-                        descBackground.height = height;
                     }
                     font.pointSize: base.fontSize
-                    wrapMode: Text.Wrap
+                    wrapMode: Text.WordWrap
                     onTextChanged: {
-
                         base.setDesc(text);
                         base.setNewHeight();
                     }
@@ -207,6 +214,7 @@ Item {
                         border.color: "transparent"
                     }
                 }
+
             }
         }
     }
