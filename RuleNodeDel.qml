@@ -189,33 +189,64 @@ Item {
                         base.setNewHeight();
                     }
                     font.pointSize: base.fontSize
-                    onLinkHovered: {
 
+                    ToolTip {
+                        id: tT
+                        x: 100;
+                        y: 200;
+                        delay: 200
+                        function show()
+                        {
+                            visible = true;
+                        }
+                        function hide()
+                        {
+                            visible = false
+                        }
                     }
+
+                    onLinkHovered: (link)=>{
+                    if (link === "")
+                    {
+                        tT.hide()
+                    }else {
+                    tT.show();
                 }
-
-                TextArea {
-                    id: descWRITE
-                    visible: false
-                    textFormat: Text.PlainText
-                    text: base.description
-                    color: "black"
-                    Component.onCompleted: {
-                        base.setNewHeight();
-                    }
-                    font.pointSize: base.fontSize
-                    wrapMode: Text.WordWrap
-                    onTextChanged: {
-                        base.setDesc(text);
-                        base.setNewHeight();
-                    }
-                    background: Rectangle {
-                        color: "transparent"
-                        border.color: "transparent"
-                    }
+            }
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton
+                hoverEnabled: true
+                onPositionChanged: {
+                    tT.y = mouseY + 20;
+                    tT.x = mouseX;
                 }
 
             }
         }
+
+        TextArea {
+            id: descWRITE
+            visible: false
+            textFormat: Text.PlainText
+            text: base.description
+            color: "black"
+            Component.onCompleted: {
+                base.setNewHeight();
+            }
+            font.pointSize: base.fontSize
+            wrapMode: Text.WordWrap
+            onTextChanged: {
+                base.setDesc(text);
+                base.setNewHeight();
+            }
+            background: Rectangle {
+                color: "transparent"
+                border.color: "transparent"
+            }
+        }
+
     }
+}
+}
 }
