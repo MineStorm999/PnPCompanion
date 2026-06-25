@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import PnPCompanion
 import QtQuick.Layouts
+import QtQuick.Effects
 
 // TODO STYLE
 ToolTip {
@@ -12,10 +13,16 @@ ToolTip {
     property string formattedText
     height: 40
 
-    background: Rectangle {
-        anchors.fill: parent
-        height: parent.height + 5
-        color: "transparent"
+    background: RectangularShadow {
+        width: parent
+        height: parent.height
+
+        offset.x: 0
+        offset.y: 0
+        radius: 0
+        blur: 30
+        spread: 10
+        color: "white"
     }
 
     RuleNodeHintModel {

@@ -62,9 +62,11 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
   case NameRole:
     if (!value.canConvert<QString>())
       return false;
-    node->setname(value.toString());
-    emit dataChanged(index, index, {Qt::EditRole, Qt::DisplayRole, NameRole});
-    return true;
+    if (RuleNodeManager::ChangeName(node, value.toString())) {
+      emit dataChanged(index, index, {Qt::EditRole, Qt::DisplayRole, NameRole});
+      return true;
+    }
+    return false;
   case DescriptionRole:
     if (!value.canConvert<QString>())
       return false;

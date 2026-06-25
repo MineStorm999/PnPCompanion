@@ -11,7 +11,7 @@ namespace Rules {
 using Rule = std::shared_ptr<Rules::RuleNode>;
 class RuleNodeManager {
 public:
-  static void ChangeName(Rule rule, QString newName);
+  static bool ChangeName(Rule rule, QString newName);
   static Rule GetRule(QString ruleName);
   static Rule GetRule(int id); // TODO add node hierarchy
 

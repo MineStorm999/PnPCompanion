@@ -10,6 +10,7 @@ Item {
     required property string name
     required property string description
     required property string formattedText
+    required property int index
     height: 40
 
     property var fontSize: 20
@@ -39,6 +40,7 @@ Item {
         {
             updateDesc();
             updateName();
+            console.log("updating: " +index);
         }
 
         function setNewHeight()
