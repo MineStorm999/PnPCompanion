@@ -38,6 +38,7 @@ public:
   void setType(Type newType) { m_type = newType; };
 
   const QString formattedText();
+  void setformattedText(QString unformattedText); // declaration
 signals:
   void nameChanged();
   void descriptionChanged();
@@ -62,7 +63,7 @@ public:
   // internally called
   void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
   // internally called
-  void setformattedText(QString unformattedText); // declaration
+  Q_INVOKABLE void _setformattedText(); // declaration
 };
 
 } // namespace Rules

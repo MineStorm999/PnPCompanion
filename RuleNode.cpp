@@ -87,7 +87,10 @@ void RuleNode::setformattedText(QString unformattedText) // implementation
   m_formattedText = formattedText + QString::fromStdString(unformattedTextRaw);
   emit formattedTextChanged();
 }
-
+void RuleNode::_setformattedText() // implementation
+{
+  setformattedText(m_description);
+}
 const QString RuleNode::formattedText() // implementation
 {
   return m_formattedText;

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import PnPCompanion
+import QtQuick.Layouts
 
 ListView {
     id: listView
@@ -13,7 +14,9 @@ ListView {
 
     ScrollBar.vertical: ScrollBar {}
 
-    delegate: RuleNodeDel {}
+    delegate: RuleNodeDel {
+
+    }
 
     function addNode(name, description)
     {
