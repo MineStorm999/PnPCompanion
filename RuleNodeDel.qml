@@ -11,7 +11,7 @@ Item {
     required property string description
     required property string formattedText
     height: 80
-
+    state: "READ"
 
     property var fontSize: 20
 
@@ -78,6 +78,18 @@ Item {
 
                     titleWRITE.visible: true
                     descWRITE.visible: true
+                }
+            },
+            State {
+                name: "PLAYER"
+                PropertyChanges {
+                    titleREAD.visible: true
+                    descREAD.visible: true
+
+                    titleWRITE.visible: false
+                    descWRITE.visible: false
+
+                    editButton.visible: false
                 }
             }
         ]
@@ -157,6 +169,12 @@ Item {
                     id: descREAD
                     textFormat: Text.MarkdownText
                     text: base.formattedText
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+
+                    onWidthChanged: {
+                        base.setNewHeight();
+                    }
                     Component.onCompleted: {
                         base.setNewHeight();
                         descBackground.height = height;
@@ -178,7 +196,7 @@ Item {
                         descBackground.height = height;
                     }
                     font.pointSize: base.fontSize
-
+                    wrapMode: Text.Wrap
                     onTextChanged: {
 
                         base.setDesc(text);
