@@ -44,9 +44,20 @@ Window {
     Button {
         id: addNode
         text: "AddNode"
+        x: 100
         property int i: 0
             onClicked: {
                 rules.addNode("NewNode" + (i++).toString(), "This a new node");           // Create a new RuleNode and add it to the model;
+            }
+        }
+
+
+
+        MouseArea {
+            hoverEnabled:true
+            propagateComposedEvents: true
+            onPositionChanged: {
+                console.log("changed ", mouseX, mouseY);
             }
         }
     }

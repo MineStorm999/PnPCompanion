@@ -162,6 +162,9 @@ Item {
                         descBackground.height = height;
                     }
                     font.pointSize: base.fontSize
+                    onLinkHovered: {
+
+                    }
                 }
 
                 TextArea {

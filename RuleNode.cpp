@@ -4,6 +4,7 @@
 
 #include "RuleNode.h"
 #include "RuleNodeManager.h"
+#include <qlogging.h>
 #include <qobject.h>
 namespace Rules {
 RuleNode::RuleNode(RuleNode *parent, QString n_name, QString n_desc)
@@ -67,24 +68,30 @@ void RuleNode::setformattedText(QString unformattedText) // implementation
 {
   QString formattedText;
   std::string unformattedTextRaw = unformattedText.toStdString();
-  auto openingBracket = unformattedTextRaw.find_first_of('{');
 
+  // links
+  auto openingBracket = unformattedTextRaw.find_first_of('{');
   while (openingBracket != std::string::npos) {
     auto closingBracket = unformattedTextRaw.find_first_of('}');
     if (closingBracket == std::string::npos) {
       break;
     }
-    formattedText += unformattedTextRaw.substr(openingBracket,
-                                               closingBracket - openingBracket);
+    formattedText += unformattedTextRaw.substr(0, openingBracket);
+    // qDebug() << "formatted text: " << formattedText;
+
     QString stringToParse = QString::fromStdString(unformattedTextRaw.substr(
-        openingBracket + 1, (closingBracket + 1) - openingBracket));
-    unformattedTextRaw = unformattedTextRaw.substr(openingBracket + 1);
+        openingBracket + 1, closingBracket - (openingBracket + 1)));
+    // qDebug() << "String to parse: " << stringToParse;
+
+    unformattedTextRaw = unformattedTextRaw.substr(closingBracket + 1);
+    openingBracket = unformattedTextRaw.find_first_of('{');
 
     if (RuleNodeManager::NameTaken(stringToParse)) {
       formattedText += "[" + stringToParse + "](" + stringToParse + ")";
     }
   }
   m_formattedText = formattedText + QString::fromStdString(unformattedTextRaw);
+  // qDebug() << "Formatted text: " << m_formattedText;
   emit formattedTextChanged();
 }
 void RuleNode::_setformattedText() // implementation

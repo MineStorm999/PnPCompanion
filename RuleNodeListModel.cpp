@@ -42,6 +42,7 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
   }
   return QVariant();
 }
+
 bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
                                 int role) {
   if (!index.isValid()) {
