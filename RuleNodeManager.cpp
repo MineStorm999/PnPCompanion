@@ -8,7 +8,7 @@
 #include <memory>
 
 namespace Rules {
-QVector<Rule> ruleNodes;
+QVector<Rule> ruleNodes; // TODO add node hierarchy
 QMap<QString, Rule> rules;
 
 Rule root;
@@ -29,6 +29,13 @@ Rule RuleNodeManager::GetRule(QString ruleName) {
   return nullptr;
 }
 
+Rule RuleNodeManager::GetRule(int id) { // TODO add node hierarchy
+  if (id >= ruleNodes.size() || id < 0) {
+    return nullptr;
+  }
+  return ruleNodes[id];
+}
+
 bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
 
 Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
@@ -44,8 +51,13 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
     return nullptr;
   }
   rules[name] = rule;
+  if (name != "Root") {
+    ruleNodes.push_back(rule); // TODO add node hierarchy
+  }
   return rules[name];
 }
+
+int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }
 
 void RuleNodeManager::Init(QJsonObject *save) {
   root = CreateRule("Root", "The root node of the rule tree.", nullptr, false);

@@ -4,34 +4,43 @@
 
 #include "RuleNodeListModel.h"
 #include "RuleNode.h"
+#include <RuleNodeManager.h>
 #include <qlogging.h>
-
 namespace Rules {
 RuleNodeListModel::RuleNodeListModel(QObject *parent)
     : QAbstractListModel{parent} {}
-
+/*
 void RuleNodeListModel::addNode(RuleNode *node, int i) {
   if (i == -1) {
     i = rowCount();
   }
   beginInsertRows(QModelIndex(), i, i);
-  m_ruleNodes.append(node);
-  endInsertRows();
-}
+  RuleNodeManager::CreateRule(QString name, QString desc, Rule parent, bool
+useParentTemplate) endInsertRows();
+}*/
 void RuleNodeListModel::addNode(QString n_name, QString n_desc, int i) {
-  addNode(new RuleNode(nullptr, n_name, n_desc), i);
+  if (RuleNodeManager::NameTaken(n_name)) {
+    return;
+  }
+  if (i == -1) {
+    i = rowCount();
+  }
+  beginInsertRows(QModelIndex(), i, i);
+  RuleNodeManager::CreateRule(n_name, n_desc, nullptr /*TODO rule hierarchy*/,
+                              false);
+  endInsertRows();
 }
 
 int RuleNodeListModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-  return m_ruleNodes.count();
+  return RuleNodeManager::GetRuleCount();
 }
 
 QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
-  if (index.row() < 0 || index.row() >= m_ruleNodes.count())
+  if (index.row() < 0 || index.row() >= RuleNodeManager::GetRuleCount())
     return QVariant();
 
-  RuleNode *node = m_ruleNodes[index.row()];
+  Rule node = RuleNodeManager::GetRule((index).row());
   switch ((RuleNodeRoles)role) {
   case NameRole:
     return node->name();
@@ -48,7 +57,7 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
   if (!index.isValid()) {
     return false;
   }
-  RuleNode *node = m_ruleNodes[index.row()];
+  Rule node = RuleNodeManager::GetRule((index).row());
   switch ((RuleNodeRoles)role) {
   case NameRole:
     if (!value.canConvert<QString>())

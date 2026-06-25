@@ -13,6 +13,9 @@ class RuleNodeManager {
 public:
   static void ChangeName(Rule rule, QString newName);
   static Rule GetRule(QString ruleName);
+  static Rule GetRule(int id); // TODO add node hierarchy
+
+  static int GetRuleCount(); // TODO add node hierarchy
   // static Rule GetRule(QString ruleName);
 
   static Rule CreateRule(QString name, QString desc, Rule parent,

@@ -20,7 +20,7 @@ public:
   };
   explicit RuleNodeListModel(QObject *parent = nullptr);
 
-  void addNode(RuleNode *node, int i = -1);
+  // void addNode(RuleNode *node, int i = -1);
 
   // overridden methods
   Q_INVOKABLE void addNode(QString n_name, QString n_desc, int i = -1);
@@ -46,6 +46,6 @@ protected:
   }
 
 private:
-  QList<RuleNode *> m_ruleNodes;
+  // QList<RuleNode *> m_ruleNodes;
 };
 } // namespace Rules
