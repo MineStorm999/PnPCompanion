@@ -17,6 +17,7 @@ void RuleNodeListModel::addNode(RuleNode *node, int i) {
   RuleNodeManager::CreateRule(QString name, QString desc, Rule parent, bool
 useParentTemplate) endInsertRows();
 }*/
+
 void RuleNodeListModel::addNode(QString n_name, QString n_desc, int i) {
   if (RuleNodeManager::NameTaken(n_name)) {
     return;
@@ -53,6 +54,24 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
   }
 
   return QVariant();
+}
+
+void RuleNodeListModel::addChildNode(QString n_name, QString n_desc,
+                                     int parentIndex) {
+
+  if (parentIndex == -1 || parentIndex >= rowCount()) { // invalid id
+    return;
+  }
+
+  if (RuleNodeManager::NameTaken(n_name)) { // name already taken
+    return;
+  }
+
+  beginInsertRows(QModelIndex(), parentIndex + 1,
+                  parentIndex + 1); // insert rows
+  RuleNodeManager::CreateRule(n_name, n_desc,
+                              RuleNodeManager::GetRule(parentIndex), false);
+  endInsertRows();
 }
 
 bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,

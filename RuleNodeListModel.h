@@ -7,6 +7,7 @@
 #include <QAbstractListModel>
 #include <QVariant>
 #include <qnamespace.h>
+#include <qtmetamacros.h>
 
 namespace Rules {
 class RuleNodeListModel : public QAbstractListModel {
@@ -24,7 +25,8 @@ public:
   // void addNode(RuleNode *node, int i = -1);
 
   // overridden methods
-  Q_INVOKABLE void addNode(QString n_name, QString n_desc, int i = -1);
+  Q_INVOKABLE void addNode(QString n_name, QString n_desc,
+                           int i = -1); // TODO Handle externally created nodes
 
   Qt::ItemFlags flags(const QModelIndex &index) const override {
     emit return Qt::ItemIsEnabled | Qt::ItemIsEditable;
@@ -36,6 +38,9 @@ public:
 
   Q_INVOKABLE QVariant data(const QModelIndex &index,
                             int role = Qt::DisplayRole) const override;
+
+  Q_INVOKABLE void addChildNode(QString n_name, QString n_desc,
+                                int parentIndex);
 
 protected:
   QHash<int, QByteArray> roleNames() const override {

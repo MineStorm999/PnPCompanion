@@ -53,7 +53,11 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
   }
   rules[name] = rule;
   if (name != "Root") {
-    ruleNodes.push_back(rule); // TODO add node hierarchy
+    if (parent && ruleNodes.contains(parent)) {
+      ruleNodes.insert(ruleNodes.indexOf(parent) + 1, rule);
+    } else {
+      ruleNodes.push_back(rule); // TODO add node hierarchy
+    }
   }
   return rules[name];
 }
