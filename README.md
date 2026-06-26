@@ -34,3 +34,7 @@
 - map with nodes, can be edited by the user.
     - nodes link to rules
     - maybe new tab "locations"
+
+
+## Resources Used:
+- <a href="https://www.flaticon.com/free-icons/manuscript" title="manuscript icons">Manuscript icon created by Freepik - Flaticon</a>  <img src="Resources/Icons/manuscript.png" alt="drawing" width="32"/>

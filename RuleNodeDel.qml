@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 import PnPCompanion
 import QtQuick.Layouts
 
-// TODO STYLE
 Item {
     id: base
     width: parent.width * (1 - ((index % 10) * 0.01))
@@ -137,10 +136,14 @@ Item {
                     }
                     Button {
                         id: editButton
-                        text: "Edit"
+                        //text: "Edit"
+                        icon.color: "transparent"
+                        icon.source: "qrc:/icons/manuscript.png"
+
                         Layout.preferredWidth: 64 // TODO icon for edit button
                         Layout.preferredHeight: 32
                         Layout.alignment: Qt.AlignRight
+
                         onClicked: {
                             if (base.state === "WRITE")
                             {

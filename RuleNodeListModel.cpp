@@ -3,9 +3,8 @@
 //
 
 #include "RuleNodeListModel.h"
-#include "RuleNode.h"
+#include <QDebug>
 #include <RuleNodeManager.h>
-#include <qlogging.h>
 namespace Rules {
 RuleNodeListModel::RuleNodeListModel(QObject *parent)
     : QAbstractListModel{parent} {}

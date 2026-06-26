@@ -4,7 +4,6 @@ import PnPCompanion
 import QtQuick.Layouts
 import QtQuick.Effects
 
-// TODO STYLE
 ToolTip {
     id: base
     width: 200
