@@ -6,6 +6,7 @@
 #include "RuleNode.h"
 #include <QVector>
 #include <memory>
+#include <qlist.h>
 
 namespace Rules {
 QVector<Rule> ruleNodes; // TODO add node hierarchy
@@ -66,6 +67,10 @@ int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }
 
 void RuleNodeManager::Init(QJsonObject *save) {
   root = CreateRule("Root", "The root node of the rule tree.", nullptr, false);
+}
+
+int RuleNodeManager::GetRuleIndex(QString ruleName) {
+  return ruleNodes.indexOf(GetRule(ruleName));
 }
 
 } // namespace Rules

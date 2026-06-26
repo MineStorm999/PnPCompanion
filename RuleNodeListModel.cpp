@@ -105,4 +105,8 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
   }
   return false;
 };
+
+int RuleNodeListModel::getIndex(QString name) {
+  return RuleNodeManager::GetRuleIndex(name);
+}
 } // namespace Rules

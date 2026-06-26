@@ -42,6 +42,8 @@ public:
   Q_INVOKABLE void addChildNode(QString n_name, QString n_desc,
                                 int parentIndex);
 
+  Q_INVOKABLE int getIndex(QString name);
+
 protected:
   QHash<int, QByteArray> roleNames() const override {
     QHash<int, QByteArray> roles;

@@ -120,7 +120,7 @@ Item {
                             id: titleREAD
                             text: base.name
 
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.Wrap
                             color: "white"
                             Layout.fillWidth: true
                             Layout.alignment: Qt.AlignBottom
@@ -207,7 +207,7 @@ Item {
                         textFormat: Text.MarkdownText
                         text: base.formattedText
                         width: parent.width
-                        wrapMode: Text.WordWrap
+                        wrapMode: Text.Wrap
                         color: "white"
 
                         onWidthChanged: {
@@ -241,40 +241,48 @@ Item {
                         tT.showHint(link);
                     }
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.NoButton
-                    hoverEnabled: true
-                    onPositionChanged: {
-                        tT.y = mouseY + 20;
-                        tT.x = mouseX;
-                    }
 
+                onLinkActivated: (link)=>{
+                if (link != "")
+                {
+                    listView.scrollToNode(link);
+                    console.log("Scrolling");
                 }
             }
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton
+                hoverEnabled: true
+                onPositionChanged: {
+                    tT.y = mouseY + 20;
+                    tT.x = mouseX;
+                }
 
-            TextArea {
-                id: descWRITE
-                visible: false
-                textFormat: Text.PlainText
-                text: base.description
-                color: "white"
-                Component.onCompleted: {
-                    base.setNewHeight();
-                }
-                font.pointSize: base.fontSize
-                wrapMode: Text.WordWrap
-                onTextChanged: {
-                    base.setDesc(text);
-                    base.setNewHeight();
-                }
-                background: Rectangle {
-                    color: "transparent"
-                    border.color: "transparent"
-                }
             }
-
         }
+
+        TextArea {
+            id: descWRITE
+            visible: false
+            textFormat: Text.PlainText
+            text: base.description
+            color: "white"
+            Component.onCompleted: {
+                base.setNewHeight();
+            }
+            font.pointSize: base.fontSize
+            wrapMode: Text.WordWrap
+            onTextChanged: {
+                base.setDesc(text);
+                base.setNewHeight();
+            }
+            background: Rectangle {
+                color: "transparent"
+                border.color: "transparent"
+            }
+        }
+
     }
+}
 }
 }

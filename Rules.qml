@@ -18,6 +18,11 @@ ListView {
 
     }
 
+    function scrollToNode(nodeName)
+    {
+        listView.positionViewAtIndex(listModel.getIndex(nodeName), ListView.Beginning);
+    }
+
     function addNode(name, description)
     {
         listModel.addNode(name, description);

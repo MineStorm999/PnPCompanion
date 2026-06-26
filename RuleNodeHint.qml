@@ -13,7 +13,7 @@ ToolTip {
     height: 40
 
     background: RectangularShadow {
-        width: parent
+        width: parent.width
         height: parent.height
 
         offset.x: 0
@@ -47,9 +47,16 @@ ToolTip {
         }
         function updateData()
         {
+            base.width = base.parent.width;
             updateName();
             updateDesc();
+            setWidth();
             setNewHeight();
+        }
+
+        function setWidth()
+        {
+            base.width = Math.min(Math.max(titleREAD.implicitWidth + 30, 200), base.parent.width);
         }
 
         function setNewHeight()
@@ -83,7 +90,7 @@ ToolTip {
                     Text {
                         id: titleREAD
                         text: base.name
-                        wrapMode: Text.WordWrap
+                        wrapMode: Text.Wrap
                         color: "white"
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignBottom
@@ -113,7 +120,7 @@ ToolTip {
                         textFormat: Text.MarkdownText
                         text: base.formattedText
                         width: parent.width
-                        wrapMode: Text.WordWrap
+                        wrapMode: Text.Wrap
                         color: "black"
                         onWidthChanged: {
                             base.setNewHeight();
