@@ -6,15 +6,20 @@
         - Description
           - can have html and markdown
           - add "links" to other rules in the system: `{OtherRule}` it then gets converted to a link. links display the linked rule as tooltip (name & description)
+          - Scroll to Node on click
     - Editable
 
 ## Roadmap
 ### Rulesystem:
 - Node Hyrachie
-- Scroll to Node on click
+    - change parents
+- Handle indexing better
 - Saving & Loading
-- QOL: can only edit one rule at a time (closes the others)
-
+- **QOL**:
+    - can only edit one rule at a time (closes the others)
+    - add dialog for description 
+        - html/markdown table creation
+        - html image inlining
 ### CharacterSheet
 - Custom png for background
 - "item placer"
