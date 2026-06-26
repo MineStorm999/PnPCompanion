@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
+set(CMAKE_AUTORCC ON)
+
 qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appPnPCompanion
@@ -19,7 +21,8 @@ qt_add_qml_module(appPnPCompanion
         Rules.qml
         RuleNodeDel.qml
         RuleNodeHint.qml
-        Resources.qrc
+        
+        RESOURCES Resources.qrc
         SOURCES RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp RuleNodeManager.cpp RuleNodeManager.h RuleNodeHintModel.h RuleNodeHintModel.cpp
 )
 

@@ -137,8 +137,8 @@ Item {
                     Button {
                         id: editButton
                         //text: "Edit"
-                        icon.color: "transparent"
-                        icon.source: "qrc:/icons/manuscript.png"
+                        //icon.color: "transparent"
+                        icon.source: "qrc:/icons/Resources/Icons/manuscript.png"
 
                         Layout.preferredWidth: 64 // TODO icon for edit button
                         Layout.preferredHeight: 32
