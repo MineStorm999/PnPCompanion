@@ -15,7 +15,11 @@
     - change parents
 - Handle indexing better
 - Saving & Loading
+- **Style**
+    - Background image (custom path)
 - **QOL**:
+    - *Chapter* rules
+        - define rules as chapter -> when explicitly viewed load only it and its children
     - can only edit one rule at a time (closes the others)
     - add dialog for description 
         - html/markdown table creation
@@ -39,6 +43,13 @@
 - map with nodes, can be edited by the user.
     - nodes link to rules
     - maybe new tab "locations"
+    - sub maps, (optional per node, eg world map, Node Town1>Town1 map ...)
+        - continuous zoom
+
+### Export
+- Pdf export
+    - export entire rule engine as formatted pdf
+    - export also adventures
 
 
 ## Resources Used:
