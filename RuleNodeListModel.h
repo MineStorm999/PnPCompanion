@@ -16,7 +16,8 @@ public:
   enum RuleNodeRoles {
     NameRole = Qt::UserRole + 1,
     DescriptionRole,
-    FormattedDescriptionRole
+    FormattedDescriptionRole,
+    DepthRole
   };
   explicit RuleNodeListModel(QObject *parent = nullptr);
 
@@ -42,6 +43,7 @@ protected:
     roles[NameRole] = "name";
     roles[DescriptionRole] = "description";
     roles[FormattedDescriptionRole] = "formattedText";
+    roles[DepthRole] = "depth";
     return roles;
   }
 

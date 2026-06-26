@@ -5,13 +5,14 @@ import QtQuick.Layouts
 
 Item {
     id: base
-    width: parent.width * (1 - ((index % 10) * 0.01))
     anchors.right: parent.right
     required property string name
     required property string description
     required property string formattedText
+    required property string depth
     required property int index
 
+    width: parent.width * (1 - ((depth) * 0.03))
     height: 40
 
     property var fontSize: 20
@@ -41,6 +42,7 @@ Item {
         {
             updateDesc();
             updateName();
+            console.log(depth);
             console.log("updating: " +index);
         }
 

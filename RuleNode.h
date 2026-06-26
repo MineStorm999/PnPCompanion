@@ -20,6 +20,7 @@ class RuleNode : public QObject {
                  TemplateChanged FINAL)
   Q_PROPERTY(QString formattedText READ formattedText WRITE setformattedText
                  NOTIFY formattedTextChanged FINAL)
+  Q_PROPERTY(int depth READ depth WRITE setdepth NOTIFY depthChanged FINAL)
 
 public:
   explicit RuleNode(RuleNode *parent = nullptr, QString n_name = "",
@@ -38,13 +39,19 @@ public:
   void setType(Type newType) { m_type = newType; };
 
   const QString formattedText();
-  void setformattedText(QString unformattedText); // declaration
+  void setformattedText(QString unformattedText);
+
+  // depth
+  void setdepth(int newdepth);
+  const int depth();
 signals:
   void nameChanged();
   void descriptionChanged();
   void TemplateChanged();
   // formattedText
   void formattedTextChanged();
+  // depth
+  void depthChanged();
 
 private:
   QString m_name;
@@ -52,6 +59,7 @@ private:
   RuleNode *m_Template;
   Type m_type;
   QString m_formattedText;
+  int m_depth{-1};
 
   std::shared_ptr<RuleNode> m_this;
 

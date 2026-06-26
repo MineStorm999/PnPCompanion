@@ -11,6 +11,9 @@ RuleNode::RuleNode(RuleNode *parent, QString n_name, QString n_desc)
     : QObject{parent} {
   setname(n_name);
   setdescription(n_desc);
+  if (parent) {
+    setdepth(parent->depth() + 1);
+  }
 }
 
 void RuleNode::setname(QString newname) // implementation
@@ -101,5 +104,19 @@ void RuleNode::_setformattedText() // implementation
 const QString RuleNode::formattedText() // implementation
 {
   return m_formattedText;
+}
+
+// implementation of depth
+void RuleNode::setdepth(int newdepth) // implementation
+{
+  if (m_depth == newdepth)
+    return;
+  m_depth = newdepth;
+  emit depthChanged();
+}
+
+const int RuleNode::depth() // implementation
+{
+  return m_depth;
 }
 } // namespace Rules

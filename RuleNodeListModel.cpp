@@ -48,6 +48,8 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
     return node->description();
   case FormattedDescriptionRole:
     return node->formattedText();
+  case DepthRole:
+    return node->depth();
   }
 
   return QVariant();
@@ -79,6 +81,8 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
     qDebug() << "You must not set formatted text directly. Use the description "
                 "property instead.";
     return true;
+  case DepthRole:
+    return false;
   }
   return false;
 };
