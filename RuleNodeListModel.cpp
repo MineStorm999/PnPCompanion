@@ -41,6 +41,7 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 
   Rule node = RuleNodeManager::GetRule((index).row());
+
   switch ((RuleNodeRoles)role) {
   case NameRole:
     return node->name();
@@ -49,6 +50,7 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
   case FormattedDescriptionRole:
     return node->formattedText();
   }
+
   return QVariant();
 }
 
