@@ -117,7 +117,7 @@ Item {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignBottom
                         Layout.leftMargin: 5
-                        font.pointSize: base.fontSize;
+                        font.pointSize: 32//base.fontSize;
                         font.bold: true
                     }
                     TextInput {
@@ -131,18 +131,30 @@ Item {
                         onTextChanged: {
                             base.setName(text);
                         }
-                        font.pointSize: base.fontSize
+                        font.pointSize: 32//base.fontSize
                         font.bold: true
                     }
                     Button {
                         id: editButton
                         //text: "Edit"
                         //icon.color: "transparent"
-                        icon.source: "qrc:/icons/Resources/Icons/manuscript.png"
 
                         Layout.preferredWidth: 64 // TODO icon for edit button
-                        Layout.preferredHeight: 32
+                        Layout.preferredHeight: 64
+
+                        icon.source: "qrc:/icons/Resources/Icons/manuscript.png"
+                        icon.height: Layout.preferredHeight
+                        icon.width: Layout.preferredWidth
                         Layout.alignment: Qt.AlignRight
+
+                        background: Rectangle {
+                            color: "transparent"
+                            border.color: "black"
+                            border.width: 3
+                            radius: 5
+
+                        }
+
 
                         onClicked: {
                             if (base.state === "WRITE")
