@@ -37,7 +37,7 @@ Window {
     Image {
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        source: "file:///home/spacedviking/Bilder/Wallpaper/wallpaperflare.com_wallpaper(2).jpg"
+        source: "qrc:/wallpapers/ninja.jpg"
         Rules {
             id: rules
         }

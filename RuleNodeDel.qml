@@ -158,7 +158,7 @@ Item {
                             Layout.preferredWidth: 64 // TODO icon for edit button
                             Layout.preferredHeight: 64
 
-                            icon.source: "qrc:/icons/Resources/Icons/manuscript.png"
+                            icon.source: "qrc:/icons/edit.png"
                             icon.height: Layout.preferredHeight
                             icon.width: Layout.preferredWidth
 

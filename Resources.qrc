@@ -1,6 +1,9 @@
 <RCC>
     <qresource prefix="/"/>
     <qresource prefix="/icons">
-        <file>Resources/Icons/manuscript.png</file>
+        <file alias="edit.png">Resources/Icons/manuscript.png</file>
+    </qresource>
+    <qresource prefix="/wallpapers">
+        <file alias="ninja.jpg">Resources/Wallpaper/wallpaperflare.com_wallpaper(2).jpg</file>
     </qresource>
 </RCC>

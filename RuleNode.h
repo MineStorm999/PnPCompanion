@@ -5,6 +5,7 @@
 #pragma once
 #include <QObject>
 #include <QQmlComponent>
+#include <memory>
 #include <qtmetamacros.h>
 namespace Rules {
 class RuleNode : public QObject {
@@ -61,7 +62,7 @@ private:
   QString m_formattedText;
   int m_depth{-1};
 
-  std::shared_ptr<RuleNode> m_this;
+  std::weak_ptr<RuleNode> m_this;
 
 public:
   // internally called

@@ -13,8 +13,7 @@ QVector<Rule> ruleNodes; // TODO add node hierarchy
 QMap<QString, Rule> rules;
 
 Rule root;
-bool RuleNodeManager::ChangeName(std::shared_ptr<Rules::RuleNode> rule,
-                                 QString newName) {
+bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
   if (rules.contains(newName)) {
     return false;
   }

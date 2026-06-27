@@ -9,12 +9,22 @@
           - Scroll to Node on click
     - Editable
 
+
 ## Roadmap
 ### Rulesystem:
 - Node Hyrachie
     - change parents
 - Handle indexing better
 - Saving & Loading
+- **Module System**
+    - Import/Export multiple different modules for session
+    - Mark different parent nodes as saved to other file
+    - Modules have to expect other modules names
+        - e.g: Root of Mod1 is child to "Mods" of core ruleset
+        - e.g: Rule is parent to existing rule 
+            - as new spell
+            - as extension of the rule
+            - ...
 - **Style**
     - Background image (custom path)
 - **QOL**:
@@ -24,6 +34,10 @@
     - add dialog for description 
         - html/markdown table creation
         - html image inlining
+    - "Template" rule for creating children faster useful for e.g: Beasts, Spells, Classes...
+
+
+
 ### CharacterSheet
 - Custom png for background
 - "item placer"
@@ -54,3 +68,4 @@
 
 ## Resources Used:
 - <a href="https://www.flaticon.com/free-icons/manuscript" title="manuscript icons">Manuscript icon created by Freepik - Flaticon</a>  <img src="Resources/Icons/manuscript.png" alt="drawing" width="32"/>
+- Ninja Wallpaper from Wallpaper-flare // TODO make link <img src="Resources/Wallpaper/wallpaperflare.com_wallpaper(2).jpg" alt="drawing" width="512"/>
