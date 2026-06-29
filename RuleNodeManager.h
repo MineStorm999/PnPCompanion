@@ -4,10 +4,10 @@
 
 #pragma once
 #include "RuleNode.h"
-#include <qcontainerfwd.h>
-#include <qobject.h>
+#include <QAbstractItemModel>
 
 namespace Rules {
+class RuleNodeTreeModel;
 using Rule = RuleNode *; // std::shared_ptr<Rules::RuleNode>;
 class RuleNodeManager {
 public:
@@ -26,6 +26,13 @@ public:
 
   static QJsonObject Save(); // TODO saving of rules
 
+  /* WARN accepts QAbstractItemModel, but can only
+                         use RuleNodeTreeModel*/
+  static void AddChildChangedNotify(
+      QAbstractItemModel
+          *notified); // TODO /* WARN accepts QAbstractItemModel, but can only
+                      // use RuleNodeTreeModel*/ Make children changed notify
+                      // more generic
   static void Init(QJsonObject *save = nullptr /*TODO saving of rules*/);
 };
 } // namespace Rules

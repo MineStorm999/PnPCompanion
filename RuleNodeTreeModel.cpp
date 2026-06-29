@@ -10,14 +10,19 @@ namespace Rules {
 RuleNodeTreeModel::RuleNodeTreeModel(QObject *parent)
     : QAbstractItemModel(parent) {
   m_roleNameMapping[NameRole] = "name";
-  beginInsertRows(QModelIndex{}, 0, 0);
+  qDebug() << "Root:" << RuleNodeManager::GetRoot();
+  qDebug() << "Root children count:"
+           << (RuleNodeManager::GetRoot()
+                   ? RuleNodeManager::GetRoot()->children().size()
+                   : 0);
+}
+
+void RuleNodeTreeModel::_init() {
+  RuleNodeManager::AddChildChangedNotify((QAbstractItemModel *)this);
 }
 
 int RuleNodeTreeModel::columnCount(const QModelIndex &parent) const {
-  if (parent.isValid())
-    return static_cast<RuleNode *>(parent.internalPointer())->children().size();
-  else
-    return RuleNodeManager::GetRoot()->children().size();
+  return 1;
 }
 
 QVariant RuleNodeTreeModel::data(const QModelIndex &index, int role) const {
@@ -84,6 +89,12 @@ QModelIndex RuleNodeTreeModel::parent(const QModelIndex &index) const {
 
   return createIndex(parentItem->parent()->children().indexOf(parentItem), 0,
                      parentItem);
+}
+
+void RuleNodeTreeModel::ChildrenChanged(Rule parent) {
+  // Emit data changed for all existing items
+  emit dataChanged(index(0, 0, QModelIndex()),
+                   index(rowCount(QModelIndex()) - 1, 0, QModelIndex()));
 }
 
 int RuleNodeTreeModel::rowCount(const QModelIndex &parent) const {

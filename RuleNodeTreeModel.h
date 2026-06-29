@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include "RuleNode.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
-#include <qqmlintegration.h>
 namespace Rules {
 
 //! [0]
@@ -33,7 +33,11 @@ public:
       Q_DECL_OVERRIDE;
   QHash<int, QByteArray> roleNames() const override;
 
+  void ChildrenChanged(RuleNode *parent = nullptr);
+
 private:
+  void _init();
+
   QHash<int, QByteArray> m_roleNameMapping;
 };
 } // namespace Rules

@@ -5,12 +5,14 @@
 #include "RuleNodeManager.h"
 #include "RuleNode.h"
 #include <QVector>
+#include <RuleNodeTreeModel.h>
 #include <memory>
-#include <qlist.h>
 
 namespace Rules {
 QVector<Rule> ruleNodes; // TODO add node hierarchy
 QMap<QString, Rule> rules;
+
+QVector<RuleNodeTreeModel *> childrenChangedNotifySubs;
 
 std::shared_ptr<RuleNode> root;
 
@@ -38,6 +40,10 @@ Rule RuleNodeManager::GetRule(int id) { // TODO add node hierarchy
   return ruleNodes[id];
 }
 
+void AddChildChangedNotify(RuleNodeTreeModel *notified) {
+  childrenChangedNotifySubs.push_back(notified);
+}
+
 Rule RuleNodeManager::GetRoot() { return root.get(); }
 
 bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
@@ -63,6 +69,9 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
     } else {
       ruleNodes.push_back(rule); // TODO add node hierarchy
     }
+  }
+  for (RuleNodeTreeModel *sub : childrenChangedNotifySubs) {
+    sub->ChildrenChanged(parent);
   }
   return rules[name];
 }
