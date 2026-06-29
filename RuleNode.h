@@ -5,7 +5,6 @@
 #pragma once
 #include <QObject>
 #include <QQmlComponent>
-#include <memory>
 #include <qtmetamacros.h>
 
 namespace Rules {

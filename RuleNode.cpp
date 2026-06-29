@@ -7,7 +7,6 @@
 #include <QDebug>
 #include <QObject>
 #include <QVector>
-#include <memory>
 
 namespace Rules {
 RuleNode::RuleNode(RuleNode *parent, QString n_name, QString n_desc)
