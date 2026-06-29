@@ -18,6 +18,10 @@ Item {
 
         property var fontSize: 20
 
+            onStateChanged: {
+                updateData();
+            }
+
             function setDesc(newDesc)
             {
                 //description = newDesc;

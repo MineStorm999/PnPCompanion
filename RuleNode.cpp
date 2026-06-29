@@ -120,7 +120,7 @@ void RuleNode::setformattedText(
   // links
   auto openBracket =
       unformattedTextRaw.find_first_of('{'); // init first bracket
-  auto id = openBracket;
+  auto id = 0;
 
   while (openBracket !=
          std::string::npos) { // loop until no opening bracket is found
@@ -138,11 +138,6 @@ void RuleNode::setformattedText(
         unformattedTextRaw.substr( // get the name of the linked Rule
             openBracket + 1, closedBracket - (openBracket + 1)));
 
-    unformattedTextRaw = unformattedTextRaw.substr(
-        closedBracket +
-        1); // remove formatted text from unfromatted pool (also link syntax)
-    openBracket = unformattedTextRaw.find_first_of('{'); // get new bracket id
-
     if (RuleNodeManager::NameTaken(
             stringToParse)) { // if rule exists, add markdown link syntax and
                               // setup internal linking
@@ -152,11 +147,17 @@ void RuleNode::setformattedText(
       if (!m_links.contains(rule)) {
         connect(rule, &RuleNode::nameChanged, this, &RuleNode::LinkNameChanged);
       }
-      m_links[rule].push_back(openBracket + id);
+      m_links[rule].push_back(openBracket + id - 1);
 
       formattedText += "[" + stringToParse + "](" + stringToParse +
                        ")"; // add markdown syntax
     }
+
+    unformattedTextRaw = unformattedTextRaw.substr(
+        closedBracket +
+        1); // remove formatted text from unfromatted pool (also link syntax)
+    openBracket = unformattedTextRaw.find_first_of('{'); // get new bracket id
+    id += closedBracket + 1;                             // increment id
   }
 
   m_formattedText = formattedText + QString::fromStdString(unformattedTextRaw);
