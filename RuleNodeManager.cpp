@@ -38,6 +38,8 @@ Rule RuleNodeManager::GetRule(int id) { // TODO add node hierarchy
   return ruleNodes[id];
 }
 
+Rule RuleNodeManager::GetRoot() { return root.get(); }
+
 bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
 
 Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,

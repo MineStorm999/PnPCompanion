@@ -12,6 +12,8 @@ using Rule = RuleNode *; // std::shared_ptr<Rules::RuleNode>;
 class RuleNodeManager {
 public:
   static bool ChangeName(Rule rule, QString newName);
+  static Rule GetRoot();
+
   static Rule GetRule(QString ruleName);
   static Rule GetRule(int id); // TODO add node hierarchy
   static int GetRuleIndex(QString ruleName);

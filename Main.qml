@@ -38,9 +38,43 @@ Window {
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         source: "qrc:/wallpapers/ninja.jpg"
+
+
+        TreeView {
+            anchors.left: parent.left
+            id: treeView
+            width: 200
+            height: parent.height
+            model: RuleNodeTreeModel {id: treeModel}
+            delegate: Item {
+                anchors.fill: parent
+                required property string name
+
+                required property TreeView treeView
+                required property bool isTreeNode
+                required property bool expanded
+                required property bool hasChildren
+                required property int depth
+                required property int row
+                required property int column
+                required property bool current
+
+                Text {
+                    text: name
+                }
+                Component.onCompleted: {
+                    console.log("HEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLOOOOOOOOOOOO");
+                }
+            }
+        }
+
         Rules {
+            anchors.right: parent.right
+            width: parent.width - 200
+            height: parent.height
             id: rules
         }
+
     }
     Button {
         id: addNode
@@ -53,12 +87,12 @@ Window {
         }
 
 
-
+        /*
         MouseArea {
             hoverEnabled:true
             propagateComposedEvents: true
             onPositionChanged: {
                 console.log("changed ", mouseX, mouseY);
             }
-        }
+        }*/
     }

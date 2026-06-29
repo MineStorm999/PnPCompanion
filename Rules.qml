@@ -8,7 +8,6 @@ ListView {
     RuleNodeListModel {
         id: listModel
     }
-    anchors.fill: parent
     model: listModel
     spacing: 5
 
