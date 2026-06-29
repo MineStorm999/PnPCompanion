@@ -77,8 +77,7 @@ void RuleNode::LinkNameChanged() {
   }
 
   if (!m_links.contains(link)) { // return and disconnect, if not linked
-    disconnect(link.get(), &RuleNode::nameChanged, this,
-               &RuleNode::LinkNameChanged);
+    disconnect(link, &RuleNode::nameChanged, this, &RuleNode::LinkNameChanged);
     return;
   }
 
@@ -114,7 +113,7 @@ void RuleNode::setformattedText(
   for (auto [linkRule, linkPtr] :
        m_links.asKeyValueRange()) { // cleanup old links
                                     // TODO cache (make efficient)
-    disconnect(linkRule.get(), &RuleNode::nameChanged, this,
+    disconnect(linkRule, &RuleNode::nameChanged, this,
                &RuleNode::LinkNameChanged);
   }
   m_links.clear();
@@ -152,8 +151,7 @@ void RuleNode::setformattedText(
       Rule rule = RuleNodeManager::GetRule(
           stringToParse); // setup connections if the linked Rules name changes
       if (!m_links.contains(rule)) {
-        connect(rule.get(), &RuleNode::nameChanged, this,
-                &RuleNode::LinkNameChanged);
+        connect(rule, &RuleNode::nameChanged, this, &RuleNode::LinkNameChanged);
       }
       m_links[rule].push_back(openBracket + id);
 

@@ -12,7 +12,8 @@ namespace Rules {
 QVector<Rule> ruleNodes; // TODO add node hierarchy
 QMap<QString, Rule> rules;
 
-Rule root;
+std::shared_ptr<RuleNode> root;
+
 bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
   if (rules.contains(newName)) {
     return false;
@@ -45,9 +46,11 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
     return nullptr;
   }
   if (!parent) {
-    parent = root; // has to have a parent
+    parent = root.get(); // has to have a parent
   }
-  Rule rule = std::make_shared<RuleNode>(parent.get(), name, desc);
+  Rule rule =
+      new RuleNode(parent, name,
+                   desc); // std::make_shared<RuleNode>(parent, name, desc);
   if (!rule) {
     return nullptr;
   }
@@ -65,7 +68,8 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }
 
 void RuleNodeManager::Init(QJsonObject *save) {
-  root = CreateRule("Root", "The root node of the rule tree.", nullptr, false);
+  root = std::make_shared<RuleNode>(
+      CreateRule("Root", "The root node of the rule tree.", nullptr, false));
 }
 
 int RuleNodeManager::GetRuleIndex(QString ruleName) {

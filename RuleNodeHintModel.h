@@ -6,7 +6,6 @@
 #include "RuleNodeManager.h"
 #include <QObject>
 #include <QQuickItem>
-#include <qtmetamacros.h>
 
 namespace Rules {
 class RuleNodeHintModel : public QObject {
@@ -21,6 +20,6 @@ public:
   Q_INVOKABLE void setHint(QString hint);
 
 private:
-  Rule m_hint;
+  Rule m_hint = {nullptr};
 };
 } // namespace Rules

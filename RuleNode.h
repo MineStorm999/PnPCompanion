@@ -65,9 +65,9 @@ private:
   QString m_formattedText;
   int m_depth{-1};
 
-  std::weak_ptr<RuleNode> m_this;
+  RuleNode *m_this;
 
-  QMap<std::shared_ptr<RuleNode>, QVector<int>> m_links;
+  QMap<RuleNode *, QVector<int>> m_links;
 
 public:
   // internally called
@@ -75,7 +75,9 @@ public:
   // internally called
   void _setname(QString newname);
   // internally called
-  void _setThis(std::shared_ptr<RuleNode> newThis) { m_this = newThis; };
+  void _setThis(RuleNode * /*std::shared_ptr<RuleNode>*/ newThis) {
+    m_this = newThis;
+  };
   // internally called
   Q_INVOKABLE void _setformattedText(); // declaration
 };

@@ -20,13 +20,13 @@ Item {
 
             function setDesc(newDesc)
             {
-                //base.description = newDesc;
+                //description = newDesc;
                 model.setData(model.index(base.index, 0), newDesc, 258);
                 updateDesc();
             }
             function setName(newName)
             {
-                //base.name = newName;
+                //name = newName;
                 model.setData(model.index(base.index, 0), newName, 257);
                 updateName();
             }
@@ -139,6 +139,7 @@ Item {
                             Layout.leftMargin: 5
                             text: base.name
                             onTextChanged: {
+                                //name = text;
                                 base.setName(text);
                             }
                             font.pointSize: 32//base.fontSize

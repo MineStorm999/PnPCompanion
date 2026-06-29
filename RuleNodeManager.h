@@ -8,7 +8,7 @@
 #include <qobject.h>
 
 namespace Rules {
-using Rule = std::shared_ptr<Rules::RuleNode>;
+using Rule = RuleNode *; // std::shared_ptr<Rules::RuleNode>;
 class RuleNodeManager {
 public:
   static bool ChangeName(Rule rule, QString newName);
