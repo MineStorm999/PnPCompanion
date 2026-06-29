@@ -17,10 +17,6 @@ RuleNodeTreeModel::RuleNodeTreeModel(QObject *parent)
                    : 0);
 }
 
-void RuleNodeTreeModel::_init() {
-  RuleNodeManager::AddChildChangedNotify((QAbstractItemModel *)this);
-}
-
 int RuleNodeTreeModel::columnCount(const QModelIndex &parent) const {
   return 1;
 }
@@ -91,7 +87,7 @@ QModelIndex RuleNodeTreeModel::parent(const QModelIndex &index) const {
                      parentItem);
 }
 
-void RuleNodeTreeModel::ChildrenChanged(Rule parent) {
+void RuleNodeTreeModel::ChildrenChanged(/*Rule parent*/) {
   // Emit data changed for all existing items
   emit dataChanged(index(0, 0, QModelIndex()),
                    index(rowCount(QModelIndex()) - 1, 0, QModelIndex()));

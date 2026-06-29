@@ -69,10 +69,10 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
     } else {
       ruleNodes.push_back(rule); // TODO add node hierarchy
     }
-  }
-  for (RuleNodeTreeModel *sub : childrenChangedNotifySubs) {
-    sub->ChildrenChanged(parent);
-  }
+  } /*
+   for (RuleNodeTreeModel *sub : childrenChangedNotifySubs) {
+     sub->ChildrenChanged(parent);
+   }*/
   return rules[name];
 }
 
