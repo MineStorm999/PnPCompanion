@@ -20,11 +20,13 @@ Item {
 
             function setDesc(newDesc)
             {
+                //base.description = newDesc;
                 model.setData(model.index(base.index, 0), newDesc, 258);
                 updateDesc();
             }
             function setName(newName)
             {
+                //base.name = newName;
                 model.setData(model.index(base.index, 0), newName, 257);
                 updateName();
             }

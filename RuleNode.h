@@ -7,6 +7,7 @@
 #include <QQmlComponent>
 #include <memory>
 #include <qtmetamacros.h>
+
 namespace Rules {
 class RuleNode : public QObject {
   Q_OBJECT
@@ -45,6 +46,8 @@ public:
   // depth
   void setdepth(int newdepth);
   const int depth();
+public slots:
+  void LinkNameChanged();
 signals:
   void nameChanged();
   void descriptionChanged();
@@ -63,6 +66,8 @@ private:
   int m_depth{-1};
 
   std::weak_ptr<RuleNode> m_this;
+
+  QMap<std::shared_ptr<RuleNode>, QVector<int>> m_links;
 
 public:
   // internally called

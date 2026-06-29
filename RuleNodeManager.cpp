@@ -18,8 +18,8 @@ bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
     return false;
   }
   rules.remove(rule->name());
-  rule->_setname(newName);
   rules[newName] = rule;
+  rule->_setname(newName);
   return true;
 }
 

@@ -29,7 +29,7 @@ public:
                            int i = -1); // TODO Handle externally created nodes
 
   Qt::ItemFlags flags(const QModelIndex &index) const override {
-    emit return Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    return Qt::ItemIsEditable | QAbstractListModel::flags(index);
   };
   Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value,
                            int role) override;
