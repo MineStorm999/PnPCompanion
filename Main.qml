@@ -39,16 +39,19 @@ Window {
         fillMode: Image.PreserveAspectCrop
         source: "qrc:/wallpapers/ninja.jpg"
 
-
         TreeView {
-            anchors.left: parent.left
             id: treeView
-            width: 200
+            anchors.left: parent.left
+            width: 400
             height: parent.height
-            model: RuleNodeTreeModel {id: treeModel}
+            model: RuleNodeTreeModel {
+                id: treeModel
+            }
+
+            rowSpacing: 5
+            ScrollBar.vertical: ScrollBar {}
+            //flickingHorizontally : false
             delegate: Item {
-                implicitWidth: treeView.width
-                implicitHeight: 20
                 required property string name
 
                 required property TreeView treeView
@@ -60,40 +63,69 @@ Window {
                 required property int column
                 required property bool current
 
-                Text {
-                    text: name
+                implicitWidth: treeView.width - (depth * 20)
+                implicitHeight: txt.contentHeight
+                x: (depth * 20) + treeView.x
+                Rectangle {
+                    Component.onCompleted: {
+                        console.log("DEPTH: " + depth);
+                    }
+                    width: treeView.width - (depth * 40)
+                    implicitHeight: parent.height
+
+                    color: "#6d05082e"
+                    border.width: 2
+                    border.color: "black"
+                    x: (depth * 40) + treeView.x
+
+                    Text {
+                        id: txt
+                        text: name
+
+                        width: parent.width
+                        wrapMode: Text.Wrap
+                        font.pointSize: 24
+                        //anchors.rightMargin: (depth * 20) + treeView.x;
+                    }
+                    MouseArea {
+                        propagateComposedEvents: true
+                        anchors.fill: parent
+                        onClicked: mouse => {
+                        rules.scrollToNode(name);
+                        mouse.accepted = false;
+                    }
+                    onDoubleClicked: mouse => {
+                    rules.scrollToNode(name);
+                    mouse.accepted = false;
                 }
-                Component.onCompleted: {
-                    console.log("HEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLOOOOOOOOOOOO");
-                }
             }
         }
-
-        Rules {
-            anchors.right: parent.right
-            width: parent.width - 200
-            height: parent.height
-            id: rules
-        }
-
     }
-    Button {
-        id: addNode
-        text: "AddNode"
-        x: 100
-        property int i: 0
-            onClicked: {
-                rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
-            }
+}
+
+Rules {
+    id: rules
+    anchors.right: parent.right
+    width: parent.width - 400
+    height: parent.height
+}
+}
+Button {
+    id: addNode
+    text: "AddNode"
+    x: 100
+    property int i: 0
+        onClicked: {
+            rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
         }
-
-
-        /*
-        MouseArea {
-            hoverEnabled:true
-            propagateComposedEvents: true
-            onPositionChanged: {
-                console.log("changed ", mouseX, mouseY);
-            }
-        }*/
     }
+
+    /*
+    MouseArea {
+        hoverEnabled:true
+        propagateComposedEvents: true
+        onPositionChanged: {
+            console.log("changed ", mouseX, mouseY);
+        }
+    }*/
+}

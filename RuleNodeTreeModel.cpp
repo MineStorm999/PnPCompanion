@@ -36,6 +36,13 @@ void RuleNodeTreeModel::ChildrenAdded(RuleNode *parent, RuleNode *child) {
   m_idMap[child] = index(parent->children().size() - 1, 0, m_idMap[parent]);
 }
 
+QModelIndex RuleNodeTreeModel::getRuleIndex(QString name) {
+  if (!RuleNodeManager::NameTaken(name)) {
+    return QModelIndex{};
+  }
+  return m_idMap[RuleNodeManager::GetRule(name)];
+}
+
 QVariant RuleNodeTreeModel::data(const QModelIndex &index, int role) const {
   if (!index.isValid())
     return QVariant();

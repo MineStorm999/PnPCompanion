@@ -8,6 +8,8 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <qabstractitemmodel.h>
+#include <qtmetamacros.h>
 namespace Rules {
 
 //! [0]
@@ -34,6 +36,7 @@ public:
   QHash<int, QByteArray> roleNames() const override;
 
   void ChildrenAdded(RuleNode *parent, RuleNode *child);
+  Q_INVOKABLE QModelIndex getRuleIndex(QString name);
 
 private:
   QHash<int, QByteArray> m_roleNameMapping;

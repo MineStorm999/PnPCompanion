@@ -12,8 +12,8 @@ Item {
     required property string depth
     required property int index
     property int children: 0 // TODO Query from model
-
-        width: parent.width * (1 - ((depth) * 0.03))
+        //anchors.rightMargin: listView.width - (listView.width * (1 - ((depth) * 0.03)))
+        width: listView.width * (1 - ((depth) * 0.03))
         height: 40
 
         property var fontSize: 20
