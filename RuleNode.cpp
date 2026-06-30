@@ -104,7 +104,7 @@ void RuleNode::LinkNameChanged() {
 
 // implementation of formattedText
 void RuleNode::setformattedText(
-    QString unformattedText) // TODO make updating links more effizient
+    QString unformattedText) // TODO make updating links more efficient
 {
   QString formattedText;
   std::string unformattedTextRaw = unformattedText.toStdString();

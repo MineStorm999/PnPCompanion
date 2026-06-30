@@ -8,6 +8,7 @@
           - add "links" to other rules in the system: `{OtherRule}` it then gets converted to a link. links display the linked rule as tooltip (name & description)
           - Scroll to Node on click
     - Editable
+    - Hyrachie
 
 
 ## Roadmap
@@ -15,7 +16,7 @@
 - Node Hyrachie
     - change parents
 - Handle indexing better
-- Saving & Loading
+- Saving & Loading `// TODO save & loading`
 - **Module System**
     - Import/Export multiple different modules for session
     - Mark different parent nodes as saved to other file
@@ -28,13 +29,13 @@
 - **Style**
     - Background image (custom path)
 - **QOL**:
-    - *Chapter* rules
+    - *Chapter* rules `// TODO Chapters`
         - define rules as chapter -> when explicitly viewed load only it and its children
     - can only edit one rule at a time (closes the others)
     - add dialog for description 
         - html/markdown table creation
         - html image inlining
-    - "Template" rule for creating children faster useful for e.g: Beasts, Spells, Classes...
+    - "Template" rule for creating children faster useful for e.g: Beasts, Spells, Classes... `//TODO templates`
 
 
 
