@@ -5,10 +5,21 @@
 #pragma once
 #include "RuleNode.h"
 #include <QAbstractItemModel>
+#include <qobject.h>
 
 namespace Rules {
-class RuleNodeTreeModel;
 using Rule = RuleNode *; // std::shared_ptr<Rules::RuleNode>;
+
+class RuleNodeChangesEventEmitter : QObject {
+  Q_OBJECT;
+
+signals:
+  void ruleNameChanged(Rule rule);
+  void ruleParentChanged(Rule rule, Rule oldParent);
+  void ruleDataChanged(Rule rule); // TODO implement ruleDataChange
+  void ruleChildAdded(Rule parent, Rule child);
+};
+
 class RuleNodeManager {
 public:
   static bool ChangeName(Rule rule, QString newName);
@@ -28,11 +39,7 @@ public:
 
   /* WARN accepts QAbstractItemModel, but can only
                          use RuleNodeTreeModel*/
-  static void AddChildChangedNotify(
-      QAbstractItemModel
-          *notified); // TODO /* WARN accepts QAbstractItemModel, but can only
-                      // use RuleNodeTreeModel*/ Make children changed notify
-                      // more generic
+  static RuleNodeChangesEventEmitter *GetSignalErmitter();
   static void Init(QJsonObject *save = nullptr /*TODO saving of rules*/);
 };
 } // namespace Rules

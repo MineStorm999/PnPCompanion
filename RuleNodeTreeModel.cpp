@@ -10,6 +10,16 @@ namespace Rules {
 RuleNodeTreeModel::RuleNodeTreeModel(QObject *parent)
     : QAbstractItemModel(parent) {
   m_roleNameMapping[NameRole] = "name";
+
+  beginInsertRows(QModelIndex{}, 0, 0);
+  RuleNodeManager::CreateRule("RuleTest", "QString desc", nullptr, false);
+  endInsertRows();
+
+  beginInsertRows(QModelIndex{}, 0, 0);
+  RuleNodeManager::CreateRule("RuleTest", "QString desc",
+                              RuleNodeManager::GetRule("RuleTest"), false);
+  endInsertRows();
+
   qDebug() << "Root:" << RuleNodeManager::GetRoot();
   qDebug() << "Root children count:"
            << (RuleNodeManager::GetRoot()

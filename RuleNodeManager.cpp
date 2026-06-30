@@ -14,15 +14,20 @@ QMap<QString, Rule> rules;
 
 QVector<RuleNodeTreeModel *> childrenChangedNotifySubs;
 
+std::shared_ptr<RuleNodeChangesEventEmitter> ermitter;
+
 std::shared_ptr<RuleNode> root;
 
 bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
-  if (rules.contains(newName)) {
+  if (rules.contains(newName)) { // check, if rule valid
     return false;
   }
-  rules.remove(rule->name());
-  rules[newName] = rule;
-  rule->_setname(newName);
+
+  rules.remove(rule->name()); // if valid, remove old name
+  rules[newName] = rule;      // add new name
+  rule->_setname(newName);    // set the new name
+
+  ermitter->emit ruleNameChanged(rule); // fire rule name changed event
   return true;
 }
 
@@ -40,39 +45,53 @@ Rule RuleNodeManager::GetRule(int id) { // TODO add node hierarchy
   return ruleNodes[id];
 }
 
-void AddChildChangedNotify(RuleNodeTreeModel *notified) {
-  childrenChangedNotifySubs.push_back(notified);
+RuleNodeChangesEventEmitter *RuleNodeManager::GetSignalErmitter() {
+  return ermitter.get();
 }
 
 Rule RuleNodeManager::GetRoot() { return root.get(); }
 
+// check if name is taken
 bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
 
+/**
+ * @brief Creates a rule
+ *
+ * @param name the name
+ * @param desc the description
+ * @param parent the parent (if nullptr == Root)
+ * @param useParentTemplate if should use template
+ * @return Rule
+ */
 Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
                                  bool useParentTemplate) {
-  if (NameTaken(name)) {
+  if (NameTaken(name)) { // name already taken
     return nullptr;
   }
-  if (!parent) {
-    parent = root.get(); // has to have a parent
+
+  if (!parent) { // set parent to root if not specified
+    parent = root.get();
   }
-  Rule rule =
-      new RuleNode(parent, name,
-                   desc); // std::make_shared<RuleNode>(parent, name, desc);
+
+  Rule rule = new RuleNode(parent, name,
+                           desc); // create the rule
+
   if (!rule) {
-    return nullptr;
+    return nullptr; // something went horribly wrong
   }
-  rules[name] = rule;
-  if (name != "Root") {
+
+  rules[name] = rule; // map the rule to its name
+
+  if (name !=
+      "Root") { // only if not root add to list // TODO change list index gen
     if (parent && ruleNodes.contains(parent)) {
       ruleNodes.insert(ruleNodes.indexOf(parent) + 1, rule);
     } else {
       ruleNodes.push_back(rule); // TODO add node hierarchy
     }
-  } /*
-   for (RuleNodeTreeModel *sub : childrenChangedNotifySubs) {
-     sub->ChildrenChanged(parent);
-   }*/
+  }
+
+  ermitter->emit ruleChildAdded(parent, rule); // emit child added signal
   return rules[name];
 }
 
@@ -81,6 +100,7 @@ int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }
 void RuleNodeManager::Init(QJsonObject *save) {
   root = std::make_shared<RuleNode>(
       CreateRule("Root", "The root node of the rule tree.", nullptr, false));
+  ermitter = std::make_shared<RuleNodeChangesEventEmitter>();
 }
 
 int RuleNodeManager::GetRuleIndex(QString ruleName) {
