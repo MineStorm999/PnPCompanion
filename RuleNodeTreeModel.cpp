@@ -6,29 +6,34 @@
 
 #include <QStringList>
 #include <qabstractitemmodel.h>
+
 namespace Rules {
 RuleNodeTreeModel::RuleNodeTreeModel(QObject *parent)
     : QAbstractItemModel(parent) {
   m_roleNameMapping[NameRole] = "name";
 
-  beginInsertRows(QModelIndex{}, 0, 0);
-  RuleNodeManager::CreateRule("RuleTest", "QString desc", nullptr, false);
-  endInsertRows();
-
-  beginInsertRows(QModelIndex{}, 0, 0);
-  RuleNodeManager::CreateRule("RuleTest", "QString desc",
-                              RuleNodeManager::GetRule("RuleTest"), false);
-  endInsertRows();
+  m_idMap[RuleNodeManager::GetRoot()] = QModelIndex{};
 
   qDebug() << "Root:" << RuleNodeManager::GetRoot();
   qDebug() << "Root children count:"
            << (RuleNodeManager::GetRoot()
                    ? RuleNodeManager::GetRoot()->children().size()
                    : 0);
+
+  connect(RuleNodeManager::GetSignalErmitter(),
+          &RuleNodeChangesEventEmitter::ruleChildAdded, this,
+          &RuleNodeTreeModel::ChildrenAdded);
 }
 
 int RuleNodeTreeModel::columnCount(const QModelIndex &parent) const {
   return 1;
+}
+
+void RuleNodeTreeModel::ChildrenAdded(RuleNode *parent, RuleNode *child) {
+  beginInsertRows(m_idMap[parent], parent->children().size() - 1,
+                  parent->children().size() - 1);
+  endInsertRows();
+  m_idMap[child] = index(parent->children().size() - 1, 0, m_idMap[parent]);
 }
 
 QVariant RuleNodeTreeModel::data(const QModelIndex &index, int role) const {
@@ -95,12 +100,6 @@ QModelIndex RuleNodeTreeModel::parent(const QModelIndex &index) const {
 
   return createIndex(parentItem->parent()->children().indexOf(parentItem), 0,
                      parentItem);
-}
-
-void RuleNodeTreeModel::ChildrenChanged(/*Rule parent*/) {
-  // Emit data changed for all existing items
-  emit dataChanged(index(0, 0, QModelIndex()),
-                   index(rowCount(QModelIndex()) - 1, 0, QModelIndex()));
 }
 
 int RuleNodeTreeModel::rowCount(const QModelIndex &parent) const {

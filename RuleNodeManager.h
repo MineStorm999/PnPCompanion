@@ -10,7 +10,7 @@
 namespace Rules {
 using Rule = RuleNode *; // std::shared_ptr<Rules::RuleNode>;
 
-class RuleNodeChangesEventEmitter : QObject {
+class RuleNodeChangesEventEmitter : public QObject {
   Q_OBJECT;
 
 signals:

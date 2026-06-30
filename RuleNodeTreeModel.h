@@ -33,9 +33,10 @@ public:
       Q_DECL_OVERRIDE;
   QHash<int, QByteArray> roleNames() const override;
 
-  void ChildrenChanged(/*RuleNode *parent = nullptr*/);
+  void ChildrenAdded(RuleNode *parent, RuleNode *child);
 
 private:
   QHash<int, QByteArray> m_roleNameMapping;
+  QMap<RuleNode *, QModelIndex> m_idMap;
 };
 } // namespace Rules

@@ -47,7 +47,8 @@ Window {
             height: parent.height
             model: RuleNodeTreeModel {id: treeModel}
             delegate: Item {
-                anchors.fill: parent
+                implicitWidth: treeView.width
+                implicitHeight: 20
                 required property string name
 
                 required property TreeView treeView

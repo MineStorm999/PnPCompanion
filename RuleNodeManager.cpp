@@ -98,9 +98,9 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }
 
 void RuleNodeManager::Init(QJsonObject *save) {
+  ermitter = std::make_shared<RuleNodeChangesEventEmitter>();
   root = std::make_shared<RuleNode>(
       CreateRule("Root", "The root node of the rule tree.", nullptr, false));
-  ermitter = std::make_shared<RuleNodeChangesEventEmitter>();
 }
 
 int RuleNodeManager::GetRuleIndex(QString ruleName) {
