@@ -264,7 +264,6 @@ Item {
                     tT.y = mouseY + 20;
                     tT.x = mouseX;
                 }
-
             }
         }
 

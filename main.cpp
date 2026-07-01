@@ -38,18 +38,5 @@ int main(int argc, char *argv[]) {
   Rules::RuleNodeListModel *myModel =
       engine.findChild<Rules::RuleNodeListModel *>("test",
                                                    Qt::FindChildrenRecursively);
-
-  for (auto &ch : c) {
-    QString s = ch->objectName();
-    qDebug() << s;
-    DumpChildren(ch, 1);
-  } /*
-   for (int i = 0; i < 10; i++) {
-     myModel->addNode(
-         new Rules::RuleNode(nullptr, "Test " + QString::number(i),
-                             "Test TESTTESTETS " + QString::number(i)));
-   }
- */
-
   return app.exec();
 }
