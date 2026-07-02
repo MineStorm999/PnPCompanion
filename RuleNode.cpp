@@ -6,6 +6,7 @@
 #include "RuleNodeManager.h"
 #include <QDebug>
 #include <QObject>
+#include <QRegularExpression>
 #include <QVector>
 
 namespace Rules {
@@ -101,67 +102,54 @@ void RuleNode::LinkNameChanged() {
   this->setdescription(
       QString::fromStdString(editedUnformattedText)); // update description
 }
+const QRegularExpression LINK_PATTERN("\\{(.*?)\\}");
 
-// implementation of formattedText
-void RuleNode::setformattedText(
-    QString unformattedText) // TODO make updating links more efficient
-{
+void RuleNode::setformattedText(QString unformattedText) {
   QString formattedText;
-  std::string unformattedTextRaw = unformattedText.toStdString();
+  QRegularExpressionMatchIterator it =
+      LINK_PATTERN.globalMatch(unformattedText);
 
-  for (auto [linkRule, linkPtr] :
-       m_links.asKeyValueRange()) { // cleanup old links
-                                    // TODO cache (make efficient)
+  // Cleanup old links
+  for (auto [linkRule, linkPtr] : m_links.asKeyValueRange()) {
     disconnect(linkRule, &RuleNode::nameChanged, this,
                &RuleNode::LinkNameChanged);
   }
   m_links.clear();
 
-  // links
-  auto openBracket =
-      unformattedTextRaw.find_first_of('{'); // init first bracket
-  auto id = 0;
+  int lastIndex = 0;
 
-  while (openBracket !=
-         std::string::npos) { // loop until no opening bracket is found
-    auto closedBracket =
-        unformattedTextRaw.find_first_of('}'); // find next closing bracket
-    if (closedBracket == std::string::npos) {  // return if no closing bracket
-      break;
-    }
+  while (it.hasNext()) {
+    QRegularExpressionMatch match = it.next();
 
-    formattedText += unformattedTextRaw.substr(
-        0, openBracket); // appending formatted text until the first open
-                         // bracket
+    // Append text before the match
+    formattedText +=
+        unformattedText.mid(lastIndex, match.capturedStart() - lastIndex);
 
-    QString stringToParse = QString::fromStdString(
-        unformattedTextRaw.substr( // get the name of the linked Rule
-            openBracket + 1, closedBracket - (openBracket + 1)));
+    // Extract the rule name from the capture group
+    QString ruleName = match.captured(1);
 
-    if (RuleNodeManager::NameTaken(
-            stringToParse)) { // if rule exists, add markdown link syntax and
-                              // setup internal linking
-
-      Rule rule = RuleNodeManager::GetRule(
-          stringToParse); // setup connections if the linked Rules name changes
+    // Check if rule exists and create link
+    if (RuleNodeManager::NameTaken(ruleName)) {
+      Rule rule = RuleNodeManager::GetRule(ruleName);
       if (!m_links.contains(rule)) {
         connect(rule, &RuleNode::nameChanged, this, &RuleNode::LinkNameChanged);
       }
-      m_links[rule].push_back(openBracket + id - 1);
+      m_links[rule].push_back(match.capturedStart() - 1);
 
-      formattedText += "[" + stringToParse + "](" + stringToParse +
-                       ")"; // add markdown syntax
+      // Add markdown link
+      formattedText += "[" + ruleName + "](" + ruleName + ")";
+    } else {
+      // Keep original text if rule doesn't exist
+      formattedText += match.captured();
     }
 
-    unformattedTextRaw = unformattedTextRaw.substr(
-        closedBracket +
-        1); // remove formatted text from unfromatted pool (also link syntax)
-    openBracket = unformattedTextRaw.find_first_of('{'); // get new bracket id
-    id += closedBracket + 1;                             // increment id
+    lastIndex = match.capturedEnd();
   }
 
-  m_formattedText = formattedText + QString::fromStdString(unformattedTextRaw);
-  // qDebug() << "Formatted text: " << m_formattedText;
+  // Append remaining text after last match
+  formattedText += unformattedText.mid(lastIndex);
+
+  m_formattedText = formattedText;
   emit formattedTextChanged();
 }
 
