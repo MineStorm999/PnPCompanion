@@ -10,29 +10,6 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-    InputPanel {
-        id: inputPanel
-        z: 99
-        y: window.height
-        width: window.width
-
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                inputPanel.y: window.height //- inputPanel.height
-            }
-        }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            NumberAnimation {
-                properties: "y"
-                easing.type: Easing.InOutQuad
-            }
-        }
-    }
 
     Image {
         anchors.fill: parent
@@ -88,19 +65,23 @@ Window {
                         //anchors.rightMargin: (depth * 20) + treeView.x;
                     }
                     MouseArea {
-                        propagateComposedEvents: true
+                        //propagateComposedEvents: true
                         anchors.fill: parent
-                        onClicked: mouse => {
-                        rules.scrollToNode(name);
-                        mouse.accepted = false;
-                    }
-                    onDoubleClicked: mouse => {
-                    rules.scrollToNode(name);
-                    mouse.accepted = false;
+                        /*Rectangle {
+                        anchors.fill: parent
+                        color: "black"
+                    }*/
+                    onClicked: mouse => {
+                    treeView.toggleExpanded(row);
                 }
+                onDoubleClicked: mouse => {
+                rules.scrollToNode(name);
+                treeView.toggleExpanded(row);
+                mouse.accepted = false;
             }
         }
     }
+}
 }
 
 Rules {
