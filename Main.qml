@@ -65,7 +65,7 @@ Window {
                         //anchors.rightMargin: (depth * 20) + treeView.x;
                     }
                     MouseArea {
-                        //propagateComposedEvents: true
+                        propagateComposedEvents: true
                         anchors.fill: parent
                         /*Rectangle {
                         anchors.fill: parent
@@ -74,7 +74,7 @@ Window {
                     onClicked: mouse => {
                     treeView.toggleExpanded(row);
                 }
-                onDoubleClicked: mouse => {
+                onDoubleClicked: mouse => { // TODO Handle tree item expanding / scroll to better
                 rules.scrollToNode(name);
                 treeView.toggleExpanded(row);
                 mouse.accepted = false;
