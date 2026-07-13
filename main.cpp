@@ -1,6 +1,7 @@
 #include "RuleNode.h"
 #include "RuleNodeListModel.h"
 #include "RuleNodeManager.h"
+#include "utils.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
@@ -27,6 +28,8 @@ int main(int argc, char *argv[]) {
   // qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
   Rules::RuleNodeManager::Init();
+  // load rules from sample file
+
   QGuiApplication app(argc, argv);
 
   QQmlApplicationEngine engine;
@@ -34,9 +37,8 @@ int main(int argc, char *argv[]) {
       &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
       []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
   engine.loadFromModule("PnPCompanion", "Main");
-  auto c = engine.children();
-  Rules::RuleNodeListModel *myModel =
-      engine.findChild<Rules::RuleNodeListModel *>("test",
-                                                   Qt::FindChildrenRecursively);
+
+  Rules::RuleNodeManager::LoadFromFile(Utils::GetExePath().toString() +
+                                       ("/Saves/default.json"));
   return app.exec();
 }

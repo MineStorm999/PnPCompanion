@@ -1,0 +1,74 @@
+{
+    "rules": [
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode0",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode1",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode10",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode11",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode12",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode2",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode3",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode4",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode5",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode6",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode7",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode8",
+            "parent": ""
+        },
+        {
+            "description": "This a new node {Root}",
+            "name": "NewNode9",
+            "parent": ""
+        },
+        {
+            "description": "The root node of the rule tree.",
+            "name": "Root",
+            "parent": "---"
+        }
+    ]
+}

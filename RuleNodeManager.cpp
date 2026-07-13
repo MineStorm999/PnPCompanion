@@ -4,6 +4,10 @@
 
 #include "RuleNodeManager.h"
 #include "RuleNode.h"
+#include "utils.h"
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QVector>
 #include <RuleNodeTreeModel.h>
 #include <memory>
@@ -93,6 +97,42 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 
   ermitter->emit ruleChildAdded(parent, rule); // emit child added signal
   return rules[name];
+}
+
+Rule RuleNodeManager::LoadRule(QJsonObject obj) {
+  if (obj.isEmpty()) {
+    return nullptr;
+  }
+  QString name = obj["name"].toString();
+  QString description = obj["description"].toString();
+  QString parent = obj["parent"].toString();
+  return CreateRule(name, description, GetRule(parent), false);
+}
+
+void RuleNodeManager::LoadFromFile(QUrl path) {
+  QJsonDocument doc = QJsonDocument::fromJson(Utils::ReadFile(path));
+  if (doc.isNull() || doc.isEmpty()) {
+    return;
+  }
+  QJsonArray rules = doc["rules"].toArray();
+  for (auto it : rules) {
+    LoadRule(it.toObject());
+  }
+}
+
+void RuleNodeManager::SaveToFile(QUrl path) {
+  QJsonArray array;
+  for (Rule rule : rules) {
+    if (rule == root.get()) {
+      continue;
+    }
+    array.append(rule->Save());
+  }
+  QJsonObject obj;
+  obj["rules"] = array;
+
+  QJsonDocument doc(obj);
+  Utils::WriteFile(path, doc.toJson());
 }
 
 int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }

@@ -4,6 +4,7 @@
 
 #include "RuleNodeHintModel.h"
 #include "RuleNodeManager.h"
+#include "utils.h"
 
 namespace Rules {
 RuleNodeHintModel::RuleNodeHintModel(QObject *parent) : QObject{parent} {}
@@ -22,6 +23,11 @@ QString RuleNodeHintModel::getFormattedText() const {
 
 void RuleNodeHintModel::setHint(QString hint) {
   m_hint = RuleNodeManager::GetRule(hint);
+}
+
+void RuleNodeHintModel::save() {
+  RuleNodeManager::SaveToFile(Utils::GetExePath().toString() +
+                              ("/Saves/default.json"));
 }
 
 } // namespace Rules

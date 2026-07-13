@@ -3,9 +3,10 @@
 //
 
 #pragma once
+#include <QJsonObject>
 #include <QObject>
 #include <QQmlComponent>
-#include <qtmetamacros.h>
+#include <qjsonobject.h>
 
 namespace Rules {
 class RuleNode : public QObject {
@@ -45,6 +46,9 @@ public:
   // depth
   void setdepth(int newdepth);
   const int depth();
+
+  QJsonObject Save();
+  bool Changed() { return m_changed; };
 public slots:
   void LinkNameChanged();
 signals:
@@ -63,6 +67,8 @@ private:
   Type m_type;
   QString m_formattedText;
   int m_depth{-1};
+
+  bool m_changed = false;
 
   RuleNode *m_this;
 

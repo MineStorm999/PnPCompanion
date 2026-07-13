@@ -100,13 +100,21 @@ Button {
             rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
         }
     }
-
-    /*
-    MouseArea {
-        hoverEnabled:true
-        propagateComposedEvents: true
-        onPositionChanged: {
-            console.log("changed ", mouseX, mouseY);
+    Button {
+        id: saveButton
+        text: "Save"
+        x: 200
+        property int i: 0
+            onClicked: {
+                treeModel.save();           // Create a new RuleNode and add it to the model;
+            }
         }
-    }*/
-}
+        /*
+        MouseArea {
+            hoverEnabled:true
+            propagateComposedEvents: true
+            onPositionChanged: {
+                console.log("changed ", mouseX, mouseY);
+            }
+        }*/
+    }

@@ -6,6 +6,7 @@
 #include "RuleNodeManager.h"
 #include <QObject>
 #include <QQuickItem>
+#include <qtmetamacros.h>
 
 namespace Rules {
 class RuleNodeHintModel : public QObject {
@@ -18,6 +19,7 @@ public:
   Q_INVOKABLE QString getName() const;
   Q_INVOKABLE QString getFormattedText() const;
   Q_INVOKABLE void setHint(QString hint);
+  Q_INVOKABLE void save(); // TODO Move qml saving somewhere else
 
 private:
   Rule m_hint = {nullptr};

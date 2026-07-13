@@ -17,20 +17,20 @@ qt_add_executable(appPnPCompanion
 qt_add_qml_module(appPnPCompanion
     URI PnPCompanion
     QML_FILES
-        Main.qml
-        Rules.qml
-        RuleNodeDel.qml
-        RuleNodeHint.qml
-        
-        RESOURCES Resources.qrc
-        SOURCES RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp RuleNodeManager.cpp RuleNodeManager.h RuleNodeHintModel.h RuleNodeHintModel.cpp RuleNodeTreeModel.h RuleNodeTreeModel.cpp
+    Main.qml
+    Rules.qml
+    RuleNodeDel.qml
+    RuleNodeHint.qml
+
+    RESOURCES Resources.qrc
+    SOURCES utils.h RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp RuleNodeManager.cpp RuleNodeManager.h RuleNodeHintModel.h RuleNodeHintModel.cpp RuleNodeTreeModel.h RuleNodeTreeModel.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 set_target_properties(appPnPCompanion PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appPnPCompanion
+    #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appPnPCompanion
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE

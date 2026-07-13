@@ -38,6 +38,8 @@ public:
   void ChildrenAdded(RuleNode *parent, RuleNode *child);
   Q_INVOKABLE QModelIndex getRuleIndex(QString name);
 
+  Q_INVOKABLE void save(); // TODO Move qml saving somewhere else
+
 private:
   QHash<int, QByteArray> m_roleNameMapping;
   QMap<RuleNode *, QModelIndex> m_idMap;

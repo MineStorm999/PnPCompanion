@@ -5,7 +5,9 @@
 #pragma once
 #include "RuleNode.h"
 #include <QAbstractItemModel>
+#include <qjsonobject.h>
 #include <qobject.h>
+#include <qurl.h>
 
 namespace Rules {
 using Rule = RuleNode *; // std::shared_ptr<Rules::RuleNode>;
@@ -33,9 +35,13 @@ public:
   static Rule CreateRule(QString name, QString desc, Rule parent,
                          bool useParentTemplate);
 
+  static Rule LoadRule(QJsonObject obj);
+  static void LoadFromFile(QUrl path);
+  static void SaveToFile(QUrl path);
+
   static bool NameTaken(QString name);
 
-  static QJsonObject Save(); // TODO saving of rules
+  // static QJsonObject Save(); // TODO saving of rules
 
   /* WARN accepts QAbstractItemModel, but can only
                          use RuleNodeTreeModel*/

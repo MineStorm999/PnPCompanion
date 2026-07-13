@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QRegularExpression>
 #include <QVector>
+#include <cstddef>
+#include <qjsonobject.h>
 
 namespace Rules {
 RuleNode::RuleNode(RuleNode *parent, QString n_name, QString n_desc)
@@ -31,6 +33,7 @@ void RuleNode::_setname(QString newname) // implementation
   if (m_name == newname)
     return;
   m_name = newname;
+  m_changed = true;
   emit nameChanged();
 }
 const QString RuleNode::name() // implementation
@@ -42,6 +45,7 @@ void RuleNode::setdescription(QString newdescription) // implementation
   if (m_description == newdescription)
     return;
   m_description = newdescription;
+  m_changed = true;
   setformattedText(newdescription);
   emit descriptionChanged();
 }
@@ -61,6 +65,7 @@ void RuleNode::setTemplate(RuleNode *newTemplate) // implementation
   if (m_Template == newTemplate)
     return;
   m_Template = newTemplate;
+  m_changed = true;
   emit TemplateChanged();
 }
 
@@ -150,6 +155,7 @@ void RuleNode::setformattedText(QString unformattedText) {
   formattedText += unformattedText.mid(lastIndex);
 
   m_formattedText = formattedText;
+  m_changed = true;
   emit formattedTextChanged();
 }
 
@@ -169,11 +175,28 @@ void RuleNode::setdepth(int newdepth) // implementation
   if (m_depth == newdepth)
     return;
   m_depth = newdepth;
+  m_changed = true;
   emit depthChanged();
 }
 
 const int RuleNode::depth() // implementation
 {
   return m_depth;
+}
+
+QJsonObject RuleNode::Save() {
+  /* if (!m_changed) { // TODO cache changes
+     return {};
+   }*/
+
+  QJsonObject obj;
+  obj.insert("name", name());
+  obj.insert("description", description());
+  if (!parent()) {
+    obj.insert("parent", "---");
+  } else {
+    obj.insert("parent", ((Rule)parent())->name());
+  }
+  return obj;
 }
 } // namespace Rules

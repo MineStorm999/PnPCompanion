@@ -4,6 +4,7 @@
 #include "RuleNode.h"
 #include "RuleNodeManager.h"
 
+#include "utils.h"
 #include <QStringList>
 #include <qabstractitemmodel.h>
 
@@ -41,6 +42,11 @@ QModelIndex RuleNodeTreeModel::getRuleIndex(QString name) {
     return QModelIndex{};
   }
   return m_idMap[RuleNodeManager::GetRule(name)];
+}
+
+void RuleNodeTreeModel::save() {
+  RuleNodeManager::SaveToFile(Utils::GetExePath().toString() +
+                              ("/Saves/default.json"));
 }
 
 QVariant RuleNodeTreeModel::data(const QModelIndex &index, int role) const {
