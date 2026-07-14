@@ -38,8 +38,8 @@ public:
                          bool useParentTemplate);
 
   static Rule LoadRule(QJsonObject obj);
-  static void LoadFromFile(QUrl path);
-  static void SaveToFile(QUrl path);
+  static void LoadFromFile(QString path);
+  static void SaveToFile(QString path);
 
   static bool NameTaken(QString name);
 

@@ -1,5 +1,6 @@
 # PnPCompanion
 ## Features
+- Saving & Loading
 - Rulesystem
     - Node:
         - Name
@@ -16,7 +17,6 @@
 - Node Hyrachie
     - change parents
 - Handle indexing better
-- Saving & Loading `// TODO save & loading`
 - **Module System**
     - Import/Export multiple different modules for session
     - Mark different parent nodes as saved to other file
@@ -27,7 +27,7 @@
             - as extension of the rule
             - ...
 - **Style**
-    - Background image (custom path)
+    - Background image (custom path / per Chapter) 
 - **QOL**:
     - *Chapter* rules `// TODO Chapters`
         - define rules as chapter -> when explicitly viewed load only it and its children
@@ -36,8 +36,6 @@
         - html/markdown table creation
         - html image inlining
     - "Template" rule for creating children faster useful for e.g: Beasts, Spells, Classes... `//TODO templates`
-
-
 
 ### CharacterSheet
 - Custom png for background
@@ -66,6 +64,11 @@
     - export entire rule engine as formatted pdf
     - export also adventures
 
+### Multiplayer
+- Fog of War for players
+    - map that is visible
+    - items, that are unknown
+    - spezies that are unknown
 
 ## Resources Used:
 - <a href="https://www.flaticon.com/free-icons/manuscript" title="manuscript icons">Manuscript icon created by Freepik - Flaticon</a>  <img src="Resources/Icons/manuscript.png" alt="drawing" width="32"/>

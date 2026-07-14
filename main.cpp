@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
       []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
   engine.loadFromModule("PnPCompanion", "Main");
 
-  Rules::RuleNodeManager::LoadFromFile(Utils::GetExePath().toString() +
-                                       ("/Saves/default.json"));
+  Rules::RuleNodeManager::LoadFromFile(
+      Utils::GetRelativePath("/Saves/default.json"));
   return app.exec();
 }

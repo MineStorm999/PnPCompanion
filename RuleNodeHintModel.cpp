@@ -26,8 +26,7 @@ void RuleNodeHintModel::setHint(QString hint) {
 }
 
 void RuleNodeHintModel::save() {
-  RuleNodeManager::SaveToFile(Utils::GetExePath().toString() +
-                              ("/Saves/default.json"));
+  RuleNodeManager::SaveToFile(Utils::GetRelativePath("/Saves/default.json"));
 }
 
 } // namespace Rules

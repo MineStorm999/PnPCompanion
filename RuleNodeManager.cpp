@@ -111,7 +111,7 @@ Rule RuleNodeManager::LoadRule(QJsonObject obj) {
   return CreateRule(name, description, GetRule(parent), false);
 }
 
-void RuleNodeManager::LoadFromFile(QUrl path) {
+void RuleNodeManager::LoadFromFile(QString path) {
   QJsonDocument doc = QJsonDocument::fromJson(Utils::ReadFile(path));
   if (doc.isNull() || doc.isEmpty()) {
     return;
@@ -129,7 +129,7 @@ void GetChildrenSave(Rule parent, QJsonArray &array) {
   }
 }
 
-void RuleNodeManager::SaveToFile(QUrl path) {
+void RuleNodeManager::SaveToFile(QString path) {
   QJsonArray array;
   for (auto child : GetRoot()->children()) {
     GetChildrenSave((Rule)child, array);

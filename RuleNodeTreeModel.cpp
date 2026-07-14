@@ -45,8 +45,7 @@ QModelIndex RuleNodeTreeModel::getRuleIndex(QString name) {
 }
 
 void RuleNodeTreeModel::save() {
-  RuleNodeManager::SaveToFile(Utils::GetExePath().toString() +
-                              ("/Saves/default.json"));
+  RuleNodeManager::SaveToFile(Utils::GetRelativePath("/Saves/default.json"));
 }
 
 QVariant RuleNodeTreeModel::data(const QModelIndex &index, int role) const {
