@@ -18,8 +18,10 @@ class RuleNodeChangesEventEmitter : public QObject {
 signals:
   void ruleNameChanged(Rule rule);
   void ruleParentChanged(Rule rule, Rule oldParent);
-  void ruleDataChanged(Rule rule); // TODO implement ruleDataChange
+  void ruleDataChanged(Rule rule); // TODO implement ruleDataChanged
   void ruleChildAdded(Rule parent, Rule child);
+  void ruleChapterChanged(Rule oldChapter,
+                          Rule newChapter); // TODO implement ruleChapters
 };
 
 class RuleNodeManager {
@@ -43,8 +45,6 @@ public:
 
   // static QJsonObject Save(); // TODO saving of rules
 
-  /* WARN accepts QAbstractItemModel, but can only
-                         use RuleNodeTreeModel*/
   static RuleNodeChangesEventEmitter *GetSignalErmitter();
   static void Init(QJsonObject *save = nullptr /*TODO saving of rules*/);
 };

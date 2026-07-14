@@ -1,6 +1,51 @@
 {
     "rules": [
         {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": ""
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1"
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1"
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1"
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1"
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": "1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1"
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_NewNode1} rule",
+            "name": "1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": ""
+        },
+        {
+            "description": "This is a child of {1th_NewChildNode_of_1th_NewChildNode_of_NewNode1} rule",
+            "name": "2th_NewChildNode_of_1th_NewChildNode_of_1th_NewChildNode_of_NewNode1",
+            "parent": "1th_NewChildNode_of_1th_NewChildNode_of_NewNode1"
+        },
+        {
+            "description": "This is a child of {NewNode1} rule",
+            "name": "1th_NewChildNode_of_NewNode1",
+            "parent": ""
+        },
+        {
             "description": "This a new node {Root}",
             "name": "NewNode0",
             "parent": ""
@@ -64,11 +109,6 @@
             "description": "This a new node {Root}",
             "name": "NewNode9",
             "parent": ""
-        },
-        {
-            "description": "The root node of the rule tree.",
-            "name": "Root",
-            "parent": "---"
         }
     ]
 }

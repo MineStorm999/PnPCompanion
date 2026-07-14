@@ -7,7 +7,11 @@
 #include <RuleNodeManager.h>
 namespace Rules {
 RuleNodeListModel::RuleNodeListModel(QObject *parent)
-    : QAbstractListModel{parent} {}
+    : QAbstractListModel{parent} {
+  connect(RuleNodeManager::GetSignalErmitter(),
+          &RuleNodeChangesEventEmitter::ruleChildAdded, this,
+          &RuleNodeListModel::_addChildNode);
+}
 /*
 void RuleNodeListModel::addNode(RuleNode *node, int i) {
   if (i == -1) {
@@ -71,6 +75,15 @@ void RuleNodeListModel::addChildNode(QString n_name, QString n_desc,
                   parentIndex + 1); // insert rows
   RuleNodeManager::CreateRule(n_name, n_desc,
                               RuleNodeManager::GetRule(parentIndex), false);
+  endInsertRows();
+}
+
+void RuleNodeListModel::_addChildNode(RuleNode *parent, RuleNode *child) {
+  int parentIndex = 0;
+  if (parent) {
+    parentIndex = getIndex(parent->name());
+  }
+  beginInsertRows(QModelIndex(), parentIndex + 1, parentIndex + 1);
   endInsertRows();
 }
 

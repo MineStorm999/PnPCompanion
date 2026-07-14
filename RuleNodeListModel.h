@@ -42,6 +42,8 @@ public:
   Q_INVOKABLE void addChildNode(QString n_name, QString n_desc,
                                 int parentIndex);
 
+  void _addChildNode(RuleNode *parent, RuleNode *child);
+
   Q_INVOKABLE int getIndex(QString name);
 
 protected:

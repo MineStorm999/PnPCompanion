@@ -11,6 +11,8 @@
 #include <QVector>
 #include <RuleNodeTreeModel.h>
 #include <memory>
+#include <qjsonarray.h>
+#include <qjsonobject.h>
 
 namespace Rules {
 QVector<Rule> ruleNodes; // TODO add node hierarchy
@@ -120,13 +122,17 @@ void RuleNodeManager::LoadFromFile(QUrl path) {
   }
 }
 
+void GetChildrenSave(Rule parent, QJsonArray &array) {
+  array.append(parent->Save());
+  for (auto child : parent->children()) {
+    GetChildrenSave((Rule)child, array);
+  }
+}
+
 void RuleNodeManager::SaveToFile(QUrl path) {
   QJsonArray array;
-  for (Rule rule : rules) {
-    if (rule == root.get()) {
-      continue;
-    }
-    array.append(rule->Save());
+  for (auto child : GetRoot()->children()) {
+    GetChildrenSave((Rule)child, array);
   }
   QJsonObject obj;
   obj["rules"] = array;
