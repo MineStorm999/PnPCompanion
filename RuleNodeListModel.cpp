@@ -55,6 +55,8 @@ QVariant RuleNodeListModel::data(const QModelIndex &index, int role) const {
     return node->formattedText();
   case DepthRole:
     return node->depth();
+  case ChapterRole:
+    return node->chapter();
   }
 
   return QVariant();
@@ -102,6 +104,7 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
       return true;
     }
     return false;
+
   case DescriptionRole:
     if (!value.canConvert<QString>())
       return false;
@@ -109,13 +112,22 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
     emit dataChanged(index, index,
                      {Qt::EditRole, Qt::DisplayRole, DescriptionRole});
     return true;
+
   case FormattedDescriptionRole:
     qDebug() << "You must not set formatted text directly. Use the description "
                 "property instead.";
     return true;
+
   case DepthRole:
     return false;
+
+  case ChapterRole:
+    if (!value.canConvert<bool>())
+      return false;
+    // node->setchapter(value.toBool());
+    return true;
   }
+
   return false;
 };
 

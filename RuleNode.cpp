@@ -192,6 +192,7 @@ QJsonObject RuleNode::Save() {
   QJsonObject obj;
   obj.insert("name", name());
   obj.insert("description", description());
+  obj.insert("chapter", chapter());
   if (!parent()) {
     obj.insert("parent", "---");
   } else {

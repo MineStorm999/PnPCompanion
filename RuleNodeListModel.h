@@ -18,7 +18,8 @@ public:
     NameRole = Qt::UserRole + 1,
     DescriptionRole,
     FormattedDescriptionRole,
-    DepthRole
+    DepthRole,
+    ChapterRole
   };
   explicit RuleNodeListModel(QObject *parent = nullptr);
 
@@ -53,6 +54,7 @@ protected:
     roles[DescriptionRole] = "description";
     roles[FormattedDescriptionRole] = "formattedText";
     roles[DepthRole] = "depth";
+    roles[ChapterRole] = "chapter";
     return roles;
   }
 

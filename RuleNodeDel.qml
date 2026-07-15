@@ -10,6 +10,7 @@ Item {
     required property string description
     required property string formattedText
     required property string depth
+    required property bool chapter
     required property int index
     property int children: 0 // TODO Query from model
         //anchors.rightMargin: listView.width - (listView.width * (1 - ((depth) * 0.03)))
@@ -34,6 +35,11 @@ Item {
                 model.setData(model.index(base.index, 0), newName, 257);
                 updateName();
             }
+            function setIsChapter(newChapterVal)
+            {
+                model.setData(model.index(base.index, 0), newChapterVal, 261);
+                updateIsChapter();
+            }
 
             function updateName()
             {
@@ -45,15 +51,22 @@ Item {
                 descREAD.text = model.data(model.index(base.index, 0), 259);
                 descWRITE.text = model.data(model.index(base.index, 0), 258);
             }
+            function updateIsChapter()
+            {
+                chapterCheckBox.checked = model.data(model.index(base.index, 0), 261);
+                titleREAD.font.pointSize = chapterCheckBox.checked ? 40 : 32
+                titleWRITE.font.pointSize = chapterCheckBox.checked ? 40 : 32
+            }
             function updateData()
             {
                 updateDesc();
                 updateName();
+                updateIsChapter();
                 depth = model.data(model.index(base.index, 0), 260);
                 //base.width = base.parent.width * (1 - ((depth) * 0.03));
 
                 console.log(depth);
-                console.log("updating: " +index);
+                console.log("updating: " + index);
                 setNewHeight();
             }
 
@@ -83,6 +96,8 @@ Item {
 
                         titleWRITE.visible: false
                         descWRITE.visible: false
+
+                        chapterCheckBox.visible: false
                     }
                 },
                 State {
@@ -93,6 +108,7 @@ Item {
 
                         titleWRITE.visible: true
                         descWRITE.visible: true
+                        chapterCheckBox.visible: true
                     }
                 },
                 State {
@@ -148,6 +164,18 @@ Item {
                             }
                             font.pointSize: 32//base.fontSize
                             font.bold: true
+                        }
+                        CheckBox {
+                            id: chapterCheckBox
+                            Layout.preferredHeight: 64
+                            text: "Chapter"
+                            visible: false
+                            Component.onCompleted: {
+                                updateData();
+                            }
+                            onCheckedChanged: {
+                                base.setIsChapter(checked);
+                            }
                         }
                         Button {
                             id: addChildButton

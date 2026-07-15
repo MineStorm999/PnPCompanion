@@ -77,7 +77,7 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
     return nullptr;
   }
 
-  if (!parent) { // set parent to root if not specified
+  if (!parent && name != "Root") { // set parent to root if not specified
     parent = root.get();
   }
 
@@ -114,6 +114,7 @@ Rule RuleNodeManager::LoadRule(
   QString name = obj["name"].toString();               // rule name
   QString description = obj["description"].toString(); // rule description
   QString parent = obj["parent"].toString();           // parent rule name
+  bool chapter = obj["chapter"].toBool();              // is rule a chapter
   return CreateRule(name, description, GetRule(parent), false); // create rule
 }
 
@@ -128,6 +129,9 @@ void AddChapterChildren(Rule parent) {
 void RuleNodeManager::SetChapter(Rule newChapter) {
   if (!newChapter) {
     newChapter = root.get();
+  }
+  while (!newChapter->chapter() && newChapter->parent()) {
+    newChapter = (Rule)newChapter->parent();
   }
   if (!newChapter->chapter()) {
     return;
