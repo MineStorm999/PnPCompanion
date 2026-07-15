@@ -97,7 +97,8 @@ Button {
     x: 100
     property int i: 0
         onClicked: {
-            rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
+            ruleCreateDlg.open();
+            //rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
         }
     }
     Button {
@@ -117,4 +118,8 @@ Button {
                 console.log("changed ", mouseX, mouseY);
             }
         }*/
+        RuleCreationDialog {
+            id : ruleCreateDlg
+        }
     }
+

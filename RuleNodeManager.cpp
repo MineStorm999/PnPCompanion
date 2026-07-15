@@ -10,10 +10,10 @@
 #include <QJsonObject>
 #include <QVector>
 #include <RuleNodeTreeModel.h>
+#include <algorithm>
+#include <cstdlib>
 #include <memory>
-#include <qjsonarray.h>
-#include <qjsonobject.h>
-
+#include <qobject.h>
 namespace Rules {
 QVector<Rule> ruleNodes; // TODO add node hierarchy
 QMap<QString, Rule> rules;
@@ -23,6 +23,7 @@ QVector<RuleNodeTreeModel *> childrenChangedNotifySubs;
 std::shared_ptr<RuleNodeChangesEventEmitter> ermitter;
 
 std::shared_ptr<RuleNode> root;
+Rule activeChapter;
 
 bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
   if (rules.contains(newName)) { // check, if rule valid
@@ -71,6 +72,7 @@ bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
  */
 Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
                                  bool useParentTemplate) {
+
   if (NameTaken(name)) { // name already taken
     return nullptr;
   }
@@ -90,25 +92,55 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 
   if (name !=
       "Root") { // only if not root add to list // TODO change list index gen
-    if (parent && ruleNodes.contains(parent)) {
+    if (parent && (ruleNodes.contains(parent) || parent == activeChapter)) {
+      // int index = ruleNodes.indexOf(parent) + 1;
       ruleNodes.insert(ruleNodes.indexOf(parent) + 1, rule);
-    } else {
+    } /*else {
       ruleNodes.push_back(rule); // TODO add node hierarchy
-    }
+    }*/
   }
 
   ermitter->emit ruleChildAdded(parent, rule); // emit child added signal
   return rules[name];
 }
 
-Rule RuleNodeManager::LoadRule(QJsonObject obj) {
-  if (obj.isEmpty()) {
+Rule RuleNodeManager::LoadRule(
+    QJsonObject obj) { // load a rule from json object
+
+  if (obj.isEmpty()) { // empty json
     return nullptr;
   }
-  QString name = obj["name"].toString();
-  QString description = obj["description"].toString();
-  QString parent = obj["parent"].toString();
-  return CreateRule(name, description, GetRule(parent), false);
+
+  QString name = obj["name"].toString();               // rule name
+  QString description = obj["description"].toString(); // rule description
+  QString parent = obj["parent"].toString();           // parent rule name
+  return CreateRule(name, description, GetRule(parent), false); // create rule
+}
+
+void AddChapterChildren(Rule parent) {
+  ruleNodes.push_back(parent);
+  auto &children = parent->children();
+  for (QObject *obj : children) {
+    AddChapterChildren((Rule)obj);
+  }
+}
+
+void RuleNodeManager::SetChapter(Rule newChapter) {
+  if (!newChapter) {
+    newChapter = root.get();
+  }
+  if (!newChapter->chapter()) {
+    return;
+  }
+  if (newChapter == activeChapter) {
+    return;
+  }
+  ruleNodes.clear();
+  activeChapter = newChapter;
+  const QObjectList &children = newChapter->children();
+  for (QObject *obj : children) {
+    AddChapterChildren((Rule)obj);
+  }
 }
 
 void RuleNodeManager::LoadFromFile(QString path) {
@@ -147,6 +179,8 @@ void RuleNodeManager::Init(QJsonObject *save) {
   ermitter = std::make_shared<RuleNodeChangesEventEmitter>();
   root = std::make_shared<RuleNode>(
       CreateRule("Root", "The root node of the rule tree.", nullptr, false));
+  root->setchapter(true);
+  SetChapter();
 }
 
 int RuleNodeManager::GetRuleIndex(QString ruleName) {

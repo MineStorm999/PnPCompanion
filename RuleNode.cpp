@@ -199,4 +199,13 @@ QJsonObject RuleNode::Save() {
   }
   return obj;
 }
+
+void RuleNode::setchapter(bool newchapter) {
+  if (m_chapter == newchapter)
+    return;
+  m_chapter = newchapter;
+  emit chapterChanged();
+}
+
+const bool RuleNode::chapter() { return m_chapter; }
 } // namespace Rules

@@ -24,6 +24,9 @@ class RuleNode : public QObject {
                  NOTIFY formattedTextChanged FINAL)
   Q_PROPERTY(int depth READ depth WRITE setdepth NOTIFY depthChanged FINAL)
 
+  Q_PROPERTY(
+      bool chapter READ chapter WRITE setchapter NOTIFY chapterChanged FINAL)
+
 public:
   explicit RuleNode(RuleNode *parent = nullptr, QString n_name = "",
                     QString n_desc = "");
@@ -43,6 +46,9 @@ public:
   const QString formattedText();
   void setformattedText(QString unformattedText);
 
+  const bool chapter();
+  void setchapter(bool newchapter);
+
   // depth
   void setdepth(int newdepth);
   const int depth();
@@ -53,6 +59,7 @@ public slots:
   void LinkNameChanged();
 signals:
   void nameChanged();
+  void chapterChanged();
   void descriptionChanged();
   void TemplateChanged();
   // formattedText
@@ -69,6 +76,7 @@ private:
   int m_depth{-1};
 
   bool m_changed = false;
+  bool m_chapter;
 
   RuleNode *m_this;
 

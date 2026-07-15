@@ -30,4 +30,10 @@ ListView {
     {
         listModel.addNode(name, description);
     }
+
+
+    function addChildNode(name, description, parentID)
+    {
+        listModel.addChildNode(name, description, parentID);
+    }
 }

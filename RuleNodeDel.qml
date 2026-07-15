@@ -154,7 +154,9 @@ Item {
                             text: "Add Child Rule"
                             onClicked: {
                                 base.children+=1;
-                                model.addChildNode(base.children + "th_NewChildNode_of_" + titleREAD.text, "This is a child of {" + titleREAD.text + "} rule", base.index);
+                                ruleCreateDlg.parentID = base.index;
+                                ruleCreateDlg.open();
+                                //model.addChildNode(base.children + "th_NewChildNode_of_" + titleREAD.text, "This is a child of {" + titleREAD.text + "} rule", base.index);
                             }
                         }
                         Button {

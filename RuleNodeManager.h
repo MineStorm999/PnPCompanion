@@ -37,6 +37,14 @@ public:
   static Rule CreateRule(QString name, QString desc, Rule parent,
                          bool useParentTemplate);
 
+  /**
+   * @brief Set the Chapter object, default to root if not set
+   * the rule has to have chapter set to to true
+   *
+   * @param newChapter
+   */
+  static void SetChapter(Rule newChapter = nullptr);
+
   static Rule LoadRule(QJsonObject obj);
   static void LoadFromFile(QString path);
   static void SaveToFile(QString path);
