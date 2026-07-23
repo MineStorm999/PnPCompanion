@@ -46,6 +46,8 @@ public:
   void _addChildNode(RuleNode *parent, RuleNode *child);
 
   Q_INVOKABLE int getIndex(QString name);
+  Q_INVOKABLE bool
+  isNameTaken(QString name); // TODO Make rule manager a qt (qml managed) obj.
 
 protected:
   QHash<int, QByteArray> roleNames() const override {

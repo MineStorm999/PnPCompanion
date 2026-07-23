@@ -36,4 +36,9 @@ ListView {
     {
         listModel.addChildNode(name, description, parentID);
     }
+
+    function isNameTaken(name)
+    {
+        return listModel.isNameTaken(name);
+    }
 }

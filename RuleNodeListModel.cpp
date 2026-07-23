@@ -35,6 +35,10 @@ void RuleNodeListModel::addNode(QString n_name, QString n_desc, int i) {
   endInsertRows();
 }
 
+bool RuleNodeListModel::isNameTaken(QString name) {
+  return RuleNodeManager::NameTaken(name);
+}
+
 int RuleNodeListModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
   return RuleNodeManager::GetRuleCount();

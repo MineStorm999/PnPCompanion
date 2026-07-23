@@ -92,9 +92,12 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 
   if (name !=
       "Root") { // only if not root add to list // TODO change list index gen
-    if (parent && (ruleNodes.contains(parent) || parent == activeChapter)) {
-      // int index = ruleNodes.indexOf(parent) + 1;
-      ruleNodes.insert(ruleNodes.indexOf(parent) + 1, rule);
+    if (parent) {
+      if (parent == activeChapter) {
+        ruleNodes.push_back(rule);
+      } else if (ruleNodes.contains(parent)) {
+        ruleNodes.insert(ruleNodes.indexOf(parent) + 1, rule);
+      }
     } /*else {
       ruleNodes.push_back(rule); // TODO add node hierarchy
     }*/
