@@ -46,6 +46,7 @@ Item {
                 titleREAD.text = model.data(model.index(base.index, 0), 257);
                 titleWRITE.text = model.data(model.index(base.index, 0), 257);
             }
+
             function updateDesc()
             {
                 descREAD.text = model.data(model.index(base.index, 0), 259);
@@ -55,6 +56,8 @@ Item {
             {
                 chapterCheckBox.checked = model.data(model.index(base.index, 0), 261);
                 titleREAD.font.pointSize = chapterCheckBox.checked ? 40 : 32
+                titleREAD.color = chapterCheckBox.checked ? "blue" : "white";
+                titleREAD.italic = chapterCheckBox.checked;
                 titleWRITE.font.pointSize = chapterCheckBox.checked ? 40 : 32
             }
             function updateData()

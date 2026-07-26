@@ -71,7 +71,7 @@ bool RuleNodeManager::NameTaken(QString name) { return rules.contains(name); }
  * @return Rule
  */
 Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
-                                 bool useParentTemplate) {
+                                 bool useParentTemplate, bool chapter) {
 
   if (NameTaken(name)) { // name already taken
     return nullptr;
@@ -102,7 +102,7 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
       ruleNodes.push_back(rule); // TODO add node hierarchy
     }*/
   }
-
+  rule->setchapter(chapter);
   ermitter->emit ruleChildAdded(parent, rule); // emit child added signal
   return rules[name];
 }
@@ -118,7 +118,8 @@ Rule RuleNodeManager::LoadRule(
   QString description = obj["description"].toString(); // rule description
   QString parent = obj["parent"].toString();           // parent rule name
   bool chapter = obj["chapter"].toBool();              // is rule a chapter
-  return CreateRule(name, description, GetRule(parent), false); // create rule
+  return CreateRule(name, description, GetRule(parent), false,
+                    chapter); // create rule
 }
 
 void AddChapterChildren(Rule parent) {
@@ -142,12 +143,23 @@ void RuleNodeManager::SetChapter(Rule newChapter) {
   if (newChapter == activeChapter) {
     return;
   }
+
+  int oldRuleCount = ruleNodes.size();
+  Rule oldChapter = activeChapter;
+
   ruleNodes.clear();
   activeChapter = newChapter;
+
   const QObjectList &children = newChapter->children();
-  for (QObject *obj : children) {
-    AddChapterChildren((Rule)obj);
+  if (activeChapter == root.get()) {
+
+    for (QObject *obj : children) {
+      AddChapterChildren((Rule)obj);
+    }
+  } else {
+    AddChapterChildren(activeChapter);
   }
+  ermitter->emit ruleChapterChanged(oldChapter, newChapter, oldRuleCount);
 }
 
 void RuleNodeManager::LoadFromFile(QString path) {

@@ -11,6 +11,9 @@ RuleNodeListModel::RuleNodeListModel(QObject *parent)
   connect(RuleNodeManager::GetSignalErmitter(),
           &RuleNodeChangesEventEmitter::ruleChildAdded, this,
           &RuleNodeListModel::_addChildNode);
+  connect(RuleNodeManager::GetSignalErmitter(),
+          &RuleNodeChangesEventEmitter::ruleChapterChanged, this,
+          &RuleNodeListModel::_chapterChanged);
 }
 /*
 void RuleNodeListModel::addNode(RuleNode *node, int i) {
@@ -84,6 +87,19 @@ void RuleNodeListModel::addChildNode(QString n_name, QString n_desc,
   endInsertRows();
 }
 
+void RuleNodeListModel::setNewChapter(QString name) {
+  RuleNodeManager::SetChapter(RuleNodeManager::GetRule(name));
+}
+
+void RuleNodeListModel::_chapterChanged(RuleNode *oldChapter,
+                                        RuleNode *newChapter,
+                                        int oldRuleCount) {
+  beginRemoveRows(QModelIndex(), 0, oldRuleCount);
+  endRemoveRows();
+  beginInsertRows(QModelIndex(), 0, rowCount());
+  endInsertRows();
+}
+
 void RuleNodeListModel::_addChildNode(RuleNode *parent, RuleNode *child) {
   int parentIndex = 0;
   if (parent) {
@@ -128,7 +144,7 @@ bool RuleNodeListModel::setData(const QModelIndex &index, const QVariant &value,
   case ChapterRole:
     if (!value.canConvert<bool>())
       return false;
-    // node->setchapter(value.toBool());
+    node->setchapter(value.toBool());
     return true;
   }
 

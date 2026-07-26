@@ -44,10 +44,12 @@ public:
                                 int parentIndex);
 
   void _addChildNode(RuleNode *parent, RuleNode *child);
-
+  void _chapterChanged(RuleNode *oldChapter, RuleNode *newChapter,
+                       int oldRuleCount);
   Q_INVOKABLE int getIndex(QString name);
   Q_INVOKABLE bool
   isNameTaken(QString name); // TODO Make rule manager a qt (qml managed) obj.
+  Q_INVOKABLE void setNewChapter(QString name);
 
 protected:
   QHash<int, QByteArray> roleNames() const override {

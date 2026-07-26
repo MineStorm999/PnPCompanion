@@ -21,9 +21,11 @@ ListView {
     {
         listView.positionViewAtIndex(listModel.getIndex(nodeName), ListView.Beginning);
         var index = treeModel.getRuleIndex(nodeName);
+        listModel.setNewChapter(nodeName);
         treeView.expandToIndex(index)
         treeView.forceLayout()
         treeView.positionViewAtIndex((index), Qt.AlignVCenter)
+
     }
 
     function addNode(name, description)

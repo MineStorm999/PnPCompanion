@@ -20,8 +20,8 @@ signals:
   void ruleParentChanged(Rule rule, Rule oldParent);
   void ruleDataChanged(Rule rule); // TODO implement ruleDataChanged
   void ruleChildAdded(Rule parent, Rule child);
-  void ruleChapterChanged(Rule oldChapter,
-                          Rule newChapter); // TODO implement ruleChapters
+  void ruleChapterChanged(Rule oldChapter, Rule newChapter,
+                          int oldRuleCount); // TODO implement ruleChapters
 };
 
 class RuleNodeManager {
@@ -35,7 +35,7 @@ public:
 
   static int GetRuleCount(); // TODO add node hierarchy
   static Rule CreateRule(QString name, QString desc, Rule parent,
-                         bool useParentTemplate);
+                         bool useParentTemplate, bool chapter = false);
 
   /**
    * @brief Set the Chapter object, default to root if not set
