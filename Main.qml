@@ -10,6 +10,7 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+    IRuleNodeManager { id:ruleNodeManagerInterface }
 
     Image {
         anchors.fill: parent

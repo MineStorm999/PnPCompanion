@@ -48,8 +48,8 @@ public:
   static void SetChapter(Rule newChapter = nullptr);
 
   static Rule LoadRule(QJsonObject obj);
-  static void LoadFromFile(QString path);
-  static void SaveToFile(QString path);
+  static void LoadFromFile(QString path = "");
+  static void SaveToFile(QString path = "");
 
   static bool NameTaken(QString name);
 
@@ -57,6 +57,5 @@ public:
 
   static RuleNodeChangesEventEmitter *GetSignalErmitter();
   static void Init(QJsonObject *save = nullptr /*TODO saving of rules*/);
-  static void _SetQMLErmitter(void *ptr);
 };
 } // namespace Rules

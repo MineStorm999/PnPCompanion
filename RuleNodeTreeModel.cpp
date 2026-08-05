@@ -52,13 +52,13 @@ QModelIndex RuleNodeTreeModel::getRuleIndex(QString name) {
   return m_idMap[RuleNodeManager::GetRule(
       name)]; // return index for the found rule
 }
-
+/* // TODO CLEAN
 void RuleNodeTreeModel::save() {
   RuleNodeManager::SaveToFile(
       Utils::GetRelativePath("/Saves/default.json")); // save rules to file
   // TODO make rulenodemanager instanced (not static anymore)
 }
-
+*/
 QVariant RuleNodeTreeModel::data(const QModelIndex &index, int role) const {
   if (!index.isValid()) // check if index is valid
     return QVariant();

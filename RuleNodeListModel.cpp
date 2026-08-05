@@ -38,10 +38,6 @@ void RuleNodeListModel::addNode(QString n_name, QString n_desc, int i) {
   endInsertRows();
 }
 
-bool RuleNodeListModel::isNameTaken(QString name) {
-  return RuleNodeManager::NameTaken(name);
-}
-
 int RuleNodeListModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
   return RuleNodeManager::GetRuleCount();
@@ -85,10 +81,6 @@ void RuleNodeListModel::addChildNode(QString n_name, QString n_desc,
   RuleNodeManager::CreateRule(n_name, n_desc,
                               RuleNodeManager::GetRule(parentIndex), false);
   endInsertRows();
-}
-
-void RuleNodeListModel::setNewChapter(QString name) {
-  RuleNodeManager::SetChapter(RuleNodeManager::GetRule(name));
 }
 
 void RuleNodeListModel::_chapterChanged(RuleNode *oldChapter,

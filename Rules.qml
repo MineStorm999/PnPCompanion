@@ -24,7 +24,7 @@ ListView {
     {
         listView.positionViewAtIndex(listModel.getIndex(nodeName), ListView.Beginning);
         var index = treeModel.getRuleIndex(nodeName);
-        listModel.setNewChapter(nodeName);
+        ruleNodeManagerInterface.setChapter(ruleNodeManagerInterface.getRule(nodeName));
         treeView.expandToIndex(index)
         treeView.forceLayout()
         treeView.positionViewAtIndex((index), Qt.AlignVCenter)
@@ -44,6 +44,6 @@ ListView {
 
     function isNameTaken(name)
     {
-        return listModel.isNameTaken(name);
+        return ruleNodeManagerInterface.nameTaken(name);
     }
 }

@@ -116,7 +116,8 @@ public:
    *
    * @return Q_INVOKABLE
    */
-  Q_INVOKABLE void save(); // TODO Move qml saving somewhere else
+  /* // TODO CLEAN Q_INVOKABLE void save(); // TODO Move qml saving somewhere
+   * else*/
 
 private:
   QHash<int, QByteArray> m_roleNameMapping;

@@ -24,7 +24,7 @@ qt_add_qml_module(appPnPCompanion
     RuleCreationDialog.qml
 
     RESOURCES Resources.qrc
-    SOURCES utils.h RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp RuleNodeManager.cpp RuleNodeManager.h RuleNodeHintModel.h RuleNodeHintModel.cpp RuleNodeTreeModel.h RuleNodeTreeModel.cpp
+    SOURCES IRuleNodeManager.cpp IRuleNodeManager.h utils.h RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp RuleNodeManager.cpp RuleNodeManager.h RuleNodeHintModel.h RuleNodeHintModel.cpp RuleNodeTreeModel.h RuleNodeTreeModel.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
