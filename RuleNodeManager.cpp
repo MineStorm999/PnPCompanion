@@ -14,16 +14,22 @@
 #include <cstdlib>
 #include <memory>
 #include <qobject.h>
+
 namespace Rules {
-QVector<Rule> ruleNodes; // TODO add node hierarchy
-QMap<QString, Rule> rules;
+QVector<Rule> ruleNodes; // holds ptrs to all nodes displayed in the list view
+QMap<QString, Rule>
+    rules; // holds ptrs to all nodes in memory (for quick access)
 
-QVector<RuleNodeTreeModel *> childrenChangedNotifySubs;
+// TODO make RuleNodeManager non static
+std::shared_ptr<RuleNodeChangesEventEmitter> ermitter; // emits events
 
-std::shared_ptr<RuleNodeChangesEventEmitter> ermitter;
-
+/**
+ * @brief One Rule to rule them all, One Rule to find them.
+ *        One Rule to bring them all and in the memory bind them.
+ *        In the Land of Code where the Shadows lie.
+ */
 std::shared_ptr<RuleNode> root;
-Rule activeChapter;
+Rule activeChapter; // the active chapter
 
 bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
   if (rules.contains(newName)) { // check, if rule valid
@@ -40,22 +46,23 @@ bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
 
 Rule RuleNodeManager::GetRule(QString ruleName) {
   if (rules.contains(ruleName)) {
-    return rules[ruleName];
+    return rules[ruleName]; // return rule if exists
   }
   return nullptr;
 }
 
-Rule RuleNodeManager::GetRule(int id) { // TODO add node hierarchy
+Rule RuleNodeManager::GetRule(int id) {
   if (id >= ruleNodes.size() || id < 0) {
     return nullptr;
   }
-  return ruleNodes[id];
+  return ruleNodes[id]; // return rule if exists
 }
 
 RuleNodeChangesEventEmitter *RuleNodeManager::GetSignalErmitter() {
-  return ermitter.get();
+  return ermitter.get(); // return signal emitter as raw ptr
 }
 
+// return root node
 Rule RuleNodeManager::GetRoot() { return root.get(); }
 
 // check if name is taken
@@ -92,19 +99,20 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 
   if (name !=
       "Root") { // only if not root add to list // TODO change list index gen
-    if (parent) {
-      if (parent == activeChapter) {
-        ruleNodes.push_back(rule);
-      } else if (ruleNodes.contains(parent)) {
-        ruleNodes.insert(ruleNodes.indexOf(parent) + 1, rule);
-      }
-    } /*else {
-      ruleNodes.push_back(rule); // TODO add node hierarchy
-    }*/
+
+    if (parent == activeChapter) {
+      ruleNodes.push_back(
+          rule); // when parent is active chapter, append to the end of the list
+    } else if (ruleNodes.contains(parent)) {
+      ruleNodes.insert(
+          ruleNodes.indexOf(parent) + 1,
+          rule); // otherwise append to the end of the parent's "list"
+    }
   }
-  rule->setchapter(chapter);
+
+  rule->setchapter(chapter); // pass the chapter arg to the rule
   ermitter->emit ruleChildAdded(parent, rule); // emit child added signal
-  return rules[name];
+  return rules[name];                          // return the created Rule
 }
 
 Rule RuleNodeManager::LoadRule(
@@ -122,88 +130,104 @@ Rule RuleNodeManager::LoadRule(
                     chapter); // create rule
 }
 
+/**
+ * @brief recursively add the children of the current chapter to the listview
+ * list
+ *
+ * @param parent
+ */
 void AddChapterChildren(Rule parent) {
   ruleNodes.push_back(parent);
   auto &children = parent->children();
+
   for (QObject *obj : children) {
-    AddChapterChildren((Rule)obj);
+    AddChapterChildren((Rule)obj); // recursively add children
   }
 }
 
 void RuleNodeManager::SetChapter(Rule newChapter) {
-  if (!newChapter) {
+  if (!newChapter) { // when invalid, default to root
     newChapter = root.get();
   }
-  while (!newChapter->chapter() && newChapter->parent()) {
+
+  while (!newChapter->chapter() &&
+         newChapter->parent()) { // find the next chapter in parents
     newChapter = (Rule)newChapter->parent();
   }
-  if (!newChapter->chapter()) {
-    return;
-  }
+
   if (newChapter == activeChapter) {
-    return;
+    return; // chapter already active
   }
 
-  int oldRuleCount = ruleNodes.size();
-  Rule oldChapter = activeChapter;
+  int oldRuleCount = ruleNodes.size(); // save the current chapter rule count
+  Rule oldChapter = activeChapter;     // save the current chapter
 
-  ruleNodes.clear();
-  activeChapter = newChapter;
+  ruleNodes.clear();          // clear the rule nodes
+  activeChapter = newChapter; // set the new chapter
 
   const QObjectList &children = newChapter->children();
-  if (activeChapter == root.get()) {
 
+  // recursively add the children of the current chapter to  the listview list
+  if (activeChapter == root.get()) {
     for (QObject *obj : children) {
       AddChapterChildren((Rule)obj);
     }
   } else {
     AddChapterChildren(activeChapter);
   }
-  ermitter->emit ruleChapterChanged(oldChapter, newChapter, oldRuleCount);
+
+  ermitter->emit ruleChapterChanged(
+      oldChapter, newChapter, oldRuleCount); // emit the chapter changed signal
 }
 
 void RuleNodeManager::LoadFromFile(QString path) {
-  QJsonDocument doc = QJsonDocument::fromJson(Utils::ReadFile(path));
+  QJsonDocument doc =
+      QJsonDocument::fromJson(Utils::ReadFile(path)); // read the json file
+
   if (doc.isNull() || doc.isEmpty()) {
-    return;
+    return; // json invalid
   }
+
   QJsonArray rules = doc["rules"].toArray();
   for (auto it : rules) {
-    LoadRule(it.toObject());
+    LoadRule(it.toObject()); // load rules recursively
   }
 }
 
 void GetChildrenSave(Rule parent, QJsonArray &array) {
   array.append(parent->Save());
   for (auto child : parent->children()) {
-    GetChildrenSave((Rule)child, array);
+    GetChildrenSave((Rule)child, array); // save children recursively
   }
 }
 
 void RuleNodeManager::SaveToFile(QString path) {
   QJsonArray array;
   for (auto child : GetRoot()->children()) {
-    GetChildrenSave((Rule)child, array);
+    GetChildrenSave((Rule)child, array); // save children recursively
   }
   QJsonObject obj;
   obj["rules"] = array;
 
   QJsonDocument doc(obj);
-  Utils::WriteFile(path, doc.toJson());
+  Utils::WriteFile(path, doc.toJson()); // write json file
 }
 
+// return the rule count for the listview
 int RuleNodeManager::GetRuleCount() { return (ruleNodes.size()); }
 
 void RuleNodeManager::Init(QJsonObject *save) {
-  ermitter = std::make_shared<RuleNodeChangesEventEmitter>();
+  ermitter =
+      std::make_shared<RuleNodeChangesEventEmitter>(); // init event emitter
   root = std::make_shared<RuleNode>(
-      CreateRule("Root", "The root node of the rule tree.", nullptr, false));
-  root->setchapter(true);
-  SetChapter();
+      CreateRule("Root", "The root node of the rule tree.", nullptr, false,
+                 true));  // create root
+  root->setchapter(true); // make the root a chapter
+  SetChapter();           // set the root as chapter
 }
 
 int RuleNodeManager::GetRuleIndex(QString ruleName) {
-  return ruleNodes.indexOf(GetRule(ruleName));
+  return ruleNodes.indexOf(GetRule(ruleName)); // return the index of the rule
 }
 
 } // namespace Rules

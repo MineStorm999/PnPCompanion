@@ -11,13 +11,22 @@
 #include <qquickview.h>
 #include <qvariant.h>
 
+/**
+ * @brief Dump children of a QObject
+ *
+ * @param obj
+ * @param depth
+ */
 void DumpChildren(QObject *obj, int depth) {
-  auto &c = obj->children();
-  QString out = "";
-  for (int i = 0; i < depth; i++) {
+  auto &c = obj->children(); // get children of the QObject
+
+  QString out = ""; // init empty string
+
+  for (int i = 0; i < depth; i++) { // indent one level deeper
     out += "---";
   }
-  for (auto &ch : c) {
+
+  for (auto &ch : c) { // dump children recursively
     QString s = ch->objectName();
     qDebug() << out + s;
     DumpChildren(ch, depth + 1);
@@ -27,18 +36,23 @@ void DumpChildren(QObject *obj, int depth) {
 int main(int argc, char *argv[]) {
   // qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
-  Rules::RuleNodeManager::Init();
+  Rules::RuleNodeManager::Init(); // initialize the rule node manager
   // load rules from sample file
 
-  QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv); // create application instance
 
-  QQmlApplicationEngine engine;
+  QQmlApplicationEngine engine; // create qml application instance
   QObject::connect(
       &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
-      []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
-  engine.loadFromModule("PnPCompanion", "Main");
+      []() { QCoreApplication::exit(-1); },
+      Qt::QueuedConnection); // connect object creation failed signal to
+                             // application exit function
 
-  Rules::RuleNodeManager::LoadFromFile(
-      Utils::GetRelativePath("/Saves/default.json"));
-  return app.exec();
+  engine.loadFromModule(
+      "PnPCompanion",
+      "Main"); // load main qml module into the QML Application Engine
+
+  Rules::RuleNodeManager::LoadFromFile(Utils::GetRelativePath(
+      "/Saves/default.json")); // Load rules from sample file
+  return app.exec(); // start application event loop and exit when done.
 }

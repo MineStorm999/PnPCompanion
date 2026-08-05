@@ -8,19 +8,37 @@
 #include <qhashfunctions.h>
 namespace Utils {
 
+/**
+ * @brief make sure the directory exists
+ *
+ * @param path
+ */
 inline void MakePath(const QString &path) {
   QFileInfo info(path);
+
   QDir dir;
   dir.mkpath(info.path());
 }
 
+/**
+ * @brief Get the Relative Path object from the base directory
+ *
+ * @param relativePath
+ * @return QString
+ */
 inline QString GetRelativePath(const QString &relativePath) {
   QString base = QCoreApplication::applicationDirPath();
-  QString full = QDir::cleanPath(base + "/" + relativePath);
 
+  QString full = QDir::cleanPath(base + "/" + relativePath);
   return full;
 }
 
+/**
+ * @brief Read the data from the given file
+ *
+ * @param path
+ * @return QByteArray
+ */
 inline QByteArray ReadFile(QString path) {
   QFile userList(path);
 

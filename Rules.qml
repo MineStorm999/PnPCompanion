@@ -3,6 +3,9 @@ import QtQuick.Controls
 import PnPCompanion
 import QtQuick.Layouts
 
+/**
+* main view for rules, like a book
+*/
 ListView {
     id: listView
     RuleNodeListModel {
