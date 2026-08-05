@@ -208,5 +208,12 @@ void RuleNode::setchapter(bool newchapter) {
   emit chapterChanged();
 }
 
+int RuleNode::IndexInParent() {
+  if (!parent()) {
+    return -1;
+  }
+  return parent()->children().indexOf(this);
+}
+
 const bool RuleNode::chapter() { return m_chapter; }
 } // namespace Rules

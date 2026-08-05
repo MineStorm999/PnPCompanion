@@ -55,6 +55,8 @@ public:
 
   QJsonObject Save();
   bool Changed() { return m_changed; };
+
+  int IndexInParent();
 public slots:
   void LinkNameChanged();
 signals:

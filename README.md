@@ -17,7 +17,8 @@
 ## Roadmap
 ### Rulesystem:
 - Node Hyrachie
-    - change parents
+    - **//TODO** change parents
+    - **//TODO** delete rules
 - Handle indexing better
 - **Module System**
     - Import/Export multiple different modules for session
@@ -29,13 +30,13 @@
             - as extension of the rule
             - ...
 - **Style**
-    - Background image (custom path / per Chapter) 
+    - Background image (custom path / per Chapter)
 - **QOL**:
     - can only edit one rule at a time (closes the others)
     - add dialog for description 
         - html/markdown table creation
         - html image inlining
-    - "Template" rule for creating children faster useful for e.g: Beasts, Spells, Classes... `//TODO templates`
+    - **//TODO** "Template" rule for creating children faster useful for e.g: Beasts, Spells, Classes... `//TODO templates`
 
 ### CharacterSheet
 - Custom png for background
@@ -71,7 +72,7 @@
     - spezies that are unknown
 
 ### Tech
-- move static RuleNodeManager class to qml with a QtObject interface
+- **//TODO** move static RuleNodeManager class to qml with a QtObject interface 
 
 ## Resources Used:
 - <a href="https://www.flaticon.com/free-icons/manuscript" title="manuscript icons">Manuscript icon created by Freepik - Flaticon</a>  <img src="Resources/Icons/manuscript.png" alt="drawing" width="32"/>

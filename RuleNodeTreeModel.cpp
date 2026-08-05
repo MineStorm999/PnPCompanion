@@ -25,6 +25,10 @@ RuleNodeTreeModel::RuleNodeTreeModel(QObject *parent)
   connect(RuleNodeManager::GetSignalErmitter(),
           &RuleNodeChangesEventEmitter::ruleChildAdded, this,
           &RuleNodeTreeModel::ChildrenAdded); // connect child added signal
+
+  connect(RuleNodeManager::GetSignalErmitter(),
+          &RuleNodeChangesEventEmitter::ruleParentChanged, this,
+          &RuleNodeTreeModel::_parentChanged); // connect parent changed signal
 }
 
 int RuleNodeTreeModel::columnCount(const QModelIndex &parent) const {
@@ -147,6 +151,12 @@ int RuleNodeTreeModel::rowCount(const QModelIndex &parent) const {
 
 QHash<int, QByteArray> RuleNodeTreeModel::roleNames() const {
   return m_roleNameMapping; // return the role names hasmap.
+}
+
+void RuleNodeTreeModel::_parentChanged(RuleNode *rule, RuleNode *oldParent,
+                                       int oldIndex, RuleNode *newParent) {
+  beginMoveRows(m_idMap[oldParent], oldIndex, oldIndex, m_idMap[newParent],
+                rule->IndexInParent());
 }
 
 } // namespace Rules

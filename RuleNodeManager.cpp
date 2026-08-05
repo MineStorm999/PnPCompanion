@@ -3,6 +3,7 @@
 //
 
 #include "RuleNodeManager.h"
+#include "IRuleNodeManager.h"
 #include "RuleNode.h"
 #include "utils.h"
 #include <QJsonArray>
@@ -22,6 +23,7 @@ QMap<QString, Rule>
 
 // TODO make RuleNodeManager non static
 std::shared_ptr<RuleNodeChangesEventEmitter> ermitter; // emits events
+IRuleNodeManager *qmlErmitter;
 
 /**
  * @brief One Rule to rule them all, One Rule to find them.
@@ -41,6 +43,9 @@ bool RuleNodeManager::ChangeName(Rule rule, QString newName) {
   rule->_setname(newName);    // set the new name
 
   ermitter->emit ruleNameChanged(rule); // fire rule name changed event
+  if (qmlErmitter) {
+    qmlErmitter->emit ruleNameChanged(rule);
+  }
   return true;
 }
 
@@ -112,7 +117,10 @@ Rule RuleNodeManager::CreateRule(QString name, QString desc, Rule parent,
 
   rule->setchapter(chapter); // pass the chapter arg to the rule
   ermitter->emit ruleChildAdded(parent, rule); // emit child added signal
-  return rules[name];                          // return the created Rule
+  if (qmlErmitter) {
+    qmlErmitter->emit ruleChildAdded(parent, rule);
+  }
+  return rules[name]; // return the created Rule
 }
 
 Rule RuleNodeManager::LoadRule(
@@ -178,6 +186,9 @@ void RuleNodeManager::SetChapter(Rule newChapter) {
 
   ermitter->emit ruleChapterChanged(
       oldChapter, newChapter, oldRuleCount); // emit the chapter changed signal
+  if (qmlErmitter) {
+    qmlErmitter->emit ruleChapterChanged(oldChapter, newChapter, oldRuleCount);
+  }
 }
 
 void RuleNodeManager::LoadFromFile(QString path) {
@@ -228,6 +239,34 @@ void RuleNodeManager::Init(QJsonObject *save) {
 
 int RuleNodeManager::GetRuleIndex(QString ruleName) {
   return ruleNodes.indexOf(GetRule(ruleName)); // return the index of the rule
+}
+
+bool RuleNodeManager::ChangeParent(Rule rule, Rule newParent) {
+  if (rule == root.get()) {
+    return false; // root can not be reparented
+  }
+
+  // validate input
+  if (!rule) {
+    return false;
+  }
+  if (!newParent) {
+    return false;
+  }
+
+  Rule oldParent = (Rule)rule->parent();
+  int oldIndex = rule->IndexInParent();
+  rule->setParent(oldParent);
+  SetChapter(activeChapter);
+  ermitter->emit ruleParentChanged(rule, oldParent, oldIndex, newParent);
+  if (qmlErmitter) {
+    qmlErmitter->emit ruleParentChanged(rule, oldParent, oldIndex, newParent);
+  }
+  return true;
+}
+
+void RuleNodeManager::_SetQMLErmitter(void *ptr) {
+  qmlErmitter = (IRuleNodeManager *)ptr;
 }
 
 } // namespace Rules

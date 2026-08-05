@@ -100,6 +100,10 @@ public:
    * @param child
    */
   void ChildrenAdded(RuleNode *parent, RuleNode *child);
+
+  void _parentChanged(RuleNode *rule, RuleNode *oldParent, int oldIndex,
+                      RuleNode *newParent);
+
   /**
    * @brief Get the Rule Index object for a given rule.
    *

@@ -17,7 +17,8 @@ class RuleNodeChangesEventEmitter : public QObject {
 
 signals:
   void ruleNameChanged(Rule rule);
-  void ruleParentChanged(Rule rule, Rule oldParent);
+  void ruleParentChanged(Rule rule, Rule oldParent, int oldIndex,
+                         Rule newParent);
   void ruleDataChanged(Rule rule); // TODO implement ruleDataChanged
   void ruleChildAdded(Rule parent, Rule child);
   void ruleChapterChanged(Rule oldChapter, Rule newChapter,
@@ -27,6 +28,7 @@ signals:
 class RuleNodeManager {
 public:
   static bool ChangeName(Rule rule, QString newName);
+  static bool ChangeParent(Rule rule, Rule newParent);
   static Rule GetRoot();
 
   static Rule GetRule(QString ruleName);
@@ -55,5 +57,6 @@ public:
 
   static RuleNodeChangesEventEmitter *GetSignalErmitter();
   static void Init(QJsonObject *save = nullptr /*TODO saving of rules*/);
+  static void _SetQMLErmitter(void *ptr);
 };
 } // namespace Rules
