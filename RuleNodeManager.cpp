@@ -239,6 +239,14 @@ int RuleNodeManager::GetRuleIndex(QString ruleName) {
 }
 
 bool RuleNodeManager::ChangeParent(Rule rule, Rule newParent) {
+  if ((Rule)rule->parent() == newParent) {
+    return false; // dont waste power
+  }
+
+  if (rule == newParent) {
+    return false; // can not change the parent to itself
+  }
+
   if (rule == root.get()) {
     return false; // root can not be reparented
   }

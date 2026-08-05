@@ -13,7 +13,7 @@ Dialog {
     modal: true
 
 
-    property string parentName: ""
+    property string ruleName: ""
         standardButtons: Dialog.Ok | Dialog.Cancel
 
         ComboBox {
@@ -32,20 +32,15 @@ Dialog {
             cmboBx.model = ruleNodeManagerInterface.getRulesNames();
         }
 
-        function opn(curParentName)
+        function opn(rlName)
         {
-            parentName = curParentName;
+            ruleName = rlName;
             updateNodeList();
-            cmboBx.currentIndex = cmboBx.find(parentName)
             open();
         }
 
         onAccepted: {
             console.log("New Parent: " + cmboBx.model[cmboBx.currentIndex]);
-            /*if (parentID < 0)
-        {
-            rules.addNode(ruleName.text, ruleDesc.text);
-        }else {
-        rules.addChildNode(ruleName.text, ruleDesc.text, parentID);*/
+            ruleNodeManagerInterface.changeParent(ruleNodeManagerInterface.getRule(ruleName), ruleNodeManagerInterface.getRule(cmboBx.model[cmboBx.currentIndex]));
+        }
     }
-}

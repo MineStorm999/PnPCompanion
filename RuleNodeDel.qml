@@ -101,6 +101,8 @@ Item {
                         descWRITE.visible: false
 
                         chapterCheckBox.visible: false
+                        changeParent.visible: false
+                        addChildButton.visible: false
                     }
                 },
                 State {
@@ -112,6 +114,8 @@ Item {
                         titleWRITE.visible: true
                         descWRITE.visible: true
                         chapterCheckBox.visible: true
+                        changeParent.visible: true
+                        addChildButton.visible: true
                     }
                 },
                 State {
@@ -181,7 +185,16 @@ Item {
                             }
                         }
                         Button {
+                            id: changeParent
+                            visible: false
+                            text: "ChangeParent"
+                            onClicked: {
+                                changeDlg.opn(name);
+                            }
+                        }
+                        Button {
                             id: addChildButton
+                            visible: false
                             text: "Add Child Rule"
                             onClicked: {
                                 base.children+=1;

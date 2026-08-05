@@ -110,7 +110,7 @@ Button {
             onClicked: {
                 treeModel.save();           // Create a new RuleNode and add it to the model;
             }
-        }
+        }/*
         Button {
             id: changeParent
             text: "ChangeParent"
@@ -120,14 +120,6 @@ Button {
                     changeDlg.opn("Root");
                     //changeDlg.updateNodeList();
                     //rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
-                }
-            }
-            /*
-            MouseArea {
-                hoverEnabled:true
-                propagateComposedEvents: true
-                onPositionChanged: {
-                    console.log("changed ", mouseX, mouseY);
                 }
             }*/
             RuleCreationDialog {

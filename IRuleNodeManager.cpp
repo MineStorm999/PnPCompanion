@@ -89,7 +89,7 @@ void IRuleNodeManager::_ruleNameChanged(RuleNode *rule) {
 };
 void IRuleNodeManager::_ruleParentChanged(RuleNode *rule, RuleNode *oldParent,
                                           int oldIndex, RuleNode *newParent) {
-  emit _ruleParentChanged(rule, oldParent, oldIndex, newParent);
+  emit ruleParentChanged(rule, oldParent, oldIndex, newParent);
 }
 void IRuleNodeManager::_ruleDataChanged(RuleNode *rule) {
   emit ruleDataChanged(rule);
