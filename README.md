@@ -8,6 +8,8 @@
           - can have html and markdown
           - add "links" to other rules in the system: `{OtherRule}` it then gets converted to a link. links display the linked rule as tooltip (name & description)
           - Scroll to Node on click
+        - Chapter rules
+            - define rules as chapter -> when explicitly viewed load only it and its children
     - Editable
     - Hyrachie
 
@@ -29,8 +31,6 @@
 - **Style**
     - Background image (custom path / per Chapter) 
 - **QOL**:
-    - *Chapter* rules `// TODO Chapters`
-        - define rules as chapter -> when explicitly viewed load only it and its children
     - can only edit one rule at a time (closes the others)
     - add dialog for description 
         - html/markdown table creation
@@ -69,6 +69,9 @@
     - map that is visible
     - items, that are unknown
     - spezies that are unknown
+
+### Tech
+- move static RuleNodeManager class to qml with a QtObject interface
 
 ## Resources Used:
 - <a href="https://www.flaticon.com/free-icons/manuscript" title="manuscript icons">Manuscript icon created by Freepik - Flaticon</a>  <img src="Resources/Icons/manuscript.png" alt="drawing" width="32"/>
