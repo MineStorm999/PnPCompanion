@@ -51,7 +51,11 @@ Rule IRuleNodeManager::getRule(int id) { return RuleNodeManager::GetRule(id); };
 
 int IRuleNodeManager::getRuleIndex(QString ruleName) {
   return RuleNodeManager::GetRuleIndex(ruleName);
+}
+QStringList IRuleNodeManager::getRulesNames() {
+  return RuleNodeManager::GetRulesNames();
 };
+;
 
 int IRuleNodeManager::getRuleCount() {
   return RuleNodeManager::GetRuleCount();

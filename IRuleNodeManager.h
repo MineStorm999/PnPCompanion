@@ -32,6 +32,7 @@ public slots:
   RuleNode *getRule(int id); // TODO add node hierarchy
   int getRuleIndex(QString ruleName);
 
+  QStringList getRulesNames();
   int getRuleCount(); // TODO add node hierarchy
   RuleNode *createRule(QString name, QString desc, RuleNode *parent,
                        bool useParentTemplate, bool chapter = false);

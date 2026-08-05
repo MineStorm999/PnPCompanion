@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <memory>
+#include <qcontainerfwd.h>
 #include <qobject.h>
 
 namespace Rules {
@@ -258,4 +259,11 @@ bool RuleNodeManager::ChangeParent(Rule rule, Rule newParent) {
   return true;
 }
 
+QStringList RuleNodeManager::GetRulesNames() {
+  QStringList rulesNames;
+  for (auto rule : rules) {
+    rulesNames.push_back(rule->name());
+  }
+  return rulesNames;
+}
 } // namespace Rules

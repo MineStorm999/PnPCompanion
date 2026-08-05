@@ -5,7 +5,9 @@
 #pragma once
 #include "RuleNode.h"
 #include <QAbstractItemModel>
+#include <qcontainerfwd.h>
 #include <qjsonobject.h>
+#include <qlist.h>
 #include <qobject.h>
 #include <qurl.h>
 
@@ -35,7 +37,9 @@ public:
   static Rule GetRule(int id); // TODO add node hierarchy
   static int GetRuleIndex(QString ruleName);
 
+  static QStringList GetRulesNames();
   static int GetRuleCount(); // TODO add node hierarchy
+
   static Rule CreateRule(QString name, QString desc, Rule parent,
                          bool useParentTemplate, bool chapter = false);
 

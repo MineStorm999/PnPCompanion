@@ -22,6 +22,7 @@ qt_add_qml_module(appPnPCompanion
     RuleNodeDel.qml
     RuleNodeHint.qml
     RuleCreationDialog.qml
+    ChangeParentDialog.qml
 
     RESOURCES Resources.qrc
     SOURCES IRuleNodeManager.cpp IRuleNodeManager.h utils.h RuleNode.h RuleNode.cpp RuleNodeListModel.h RuleNodeListModel.cpp RuleNodeManager.cpp RuleNodeManager.h RuleNodeHintModel.h RuleNodeHintModel.cpp RuleNodeTreeModel.h RuleNodeTreeModel.cpp

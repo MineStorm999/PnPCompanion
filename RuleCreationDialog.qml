@@ -14,7 +14,6 @@ Dialog {
 
     property int parentID: -1
 
-
         function setNewHeight()
         {
             base.height = ruleDesc.contentHeight + ruleName.contentHeight + 150

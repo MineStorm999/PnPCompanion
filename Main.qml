@@ -111,16 +111,31 @@ Button {
                 treeModel.save();           // Create a new RuleNode and add it to the model;
             }
         }
-        /*
-        MouseArea {
-            hoverEnabled:true
-            propagateComposedEvents: true
-            onPositionChanged: {
-                console.log("changed ", mouseX, mouseY);
+        Button {
+            id: changeParent
+            text: "ChangeParent"
+            x: 300
+            property int i: 0
+                onClicked: {
+                    changeDlg.opn("Root");
+                    //changeDlg.updateNodeList();
+                    //rules.addNode("NewNode" + (i++).toString(), "This a new node {Root}");           // Create a new RuleNode and add it to the model;
+                }
             }
-        }*/
-        RuleCreationDialog {
-            id : ruleCreateDlg
+            /*
+            MouseArea {
+                hoverEnabled:true
+                propagateComposedEvents: true
+                onPositionChanged: {
+                    console.log("changed ", mouseX, mouseY);
+                }
+            }*/
+            RuleCreationDialog {
+                id : ruleCreateDlg
+            }
+
+            ChangeParentDialog {
+                id: changeDlg
+            }
         }
-    }
 
